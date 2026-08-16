@@ -22,7 +22,7 @@ python3 scripts/benchmarks/run_banking77_routing.py \
 ## 输出
 
 - `report.json`：分子、分母、比率、95% Wilson 区间、质量门槛与不宣称项；
-- `report.md`：评委可读结论；
+- `report.md`：人类可读结论；
 - `case-results.jsonl`：3,080 条逐样本结果，只含文本 SHA-256，不含原始话术；
 - `source-lock.json`：来源、commit、许可和文件摘要。
 

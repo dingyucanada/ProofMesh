@@ -301,7 +301,7 @@ def test_readiness_requires_every_security_boundary_identity(monkeypatch, action
     assert "gateway" in unavailable.json()["detail"]["missing_authenticated_roles"]
 
 
-def test_judge_console_targets_the_role_separated_api_contract():
+def test_operator_console_targets_the_role_separated_api_contract():
     static_dir = Path(__file__).resolve().parents[1] / "src/proofmesh/static"
     app_source = (static_dir / "app.js").read_text(encoding="utf-8")
     page_source = (static_dir / "index.html").read_text(encoding="utf-8")

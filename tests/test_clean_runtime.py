@@ -39,7 +39,7 @@ def test_clean_runtime_removes_only_ephemeral_targets(tmp_path, capsys):
     (tmp_path / "docs/demo-waiting-approval.png").write_text("legacy", encoding="utf-8")
     (tmp_path / "docs/demo-final-rollback.png").write_text("legacy", encoding="utf-8")
     (tmp_path / "docs/judge-console-compensated.png").write_text("legacy", encoding="utf-8")
-    current_console = tmp_path / "docs/judge-console-compensated-current.png"
+    current_console = tmp_path / "docs/console-compensated-reference.png"
     current_console.write_text("current", encoding="utf-8")
 
     module.main()

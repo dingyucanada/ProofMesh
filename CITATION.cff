@@ -5,6 +5,8 @@ type: software
 version: 1.0.0
 license: Apache-2.0
 date-released: 2026-08-13
+repository-code: "https://github.com/dingyucanada/ProofMesh"
+url: "https://dingyucanada.github.io/ProofMesh/"
 abstract: >-
   A policy-bound execution and evidence control plane for multi-agent business
   side effects, with Action Passports, recoverable operations, Human approval,

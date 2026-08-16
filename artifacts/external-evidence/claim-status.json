@@ -1,10 +1,6 @@
 {
   "schema_version": "proofmesh.external-claim-register/v1",
-  "policy": "fail-closed: a claim remains PENDING until every declared requirement is represented by a hashed release artifact and an external reviewer is named",
-  "score_target": {
-    "engineering": "approximately 88 internal target; not an official competition score",
-    "external_evidence": "95+ competitiveness target; not a promise or judge result"
-  },
+  "policy": "fail-closed: a maturity claim remains PENDING until every declared requirement is represented by a hashed release artifact and an external reviewer is named",
   "claims": [
     {
       "id": "model_driven_agentteams",
@@ -80,17 +76,16 @@
       "verified_at": null
     },
     {
-      "id": "public_repository_and_identity",
+      "id": "public_release_and_maintenance",
       "status": "PENDING",
-      "allowed_claim": "A scrubbed local release is reproducible; public repository and competition identity links are not yet supplied.",
+      "allowed_claim": "The scrubbed source repository is public at https://github.com/dingyucanada/ProofMesh; an immutable signed release, public security contact, and independent adoption evidence are not yet verified.",
       "prohibited_claims": [
         "public open-source adoption evidence",
-        "public competition identity verified"
+        "maintained production-grade open-source project"
       ],
       "evidence_requirements": [
         "public_repository_record",
         "immutable_release_record",
-        "competition_identity_record",
         "public_contact_record"
       ],
       "evidence_files": [],

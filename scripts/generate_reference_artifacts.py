@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate judge-facing evidence by executing isolated ProofMesh workflows.
+"""Generate reviewer-facing evidence by executing isolated ProofMesh workflows.
 
 The files are derived from real state transitions in the deterministic commerce
 sandbox.  They are not model-quality or production-availability measurements.

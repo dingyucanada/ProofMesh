@@ -38,7 +38,7 @@ PYTHONPATH=src python3 -m proofmesh.cli --home . verify-proof \
 
 CLI 的 `demo-refund` 是本地确定性 smoke runner；它调用同一控制面，但不证明 AgentTeams Worker 已认领任务。真实 AgentTeams 路径必须逐步调用角色 MCP。
 
-## 2. 评委控制台
+## 2. 本地复现控制台
 
 API 默认 fail closed。先复制 `.env.example`，将每个 `replace-with-*` 替换为不同的随机值，再加载环境：
 

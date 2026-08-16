@@ -1,4 +1,4 @@
-name: Deploy read-only evidence replay
+name: Deploy interactive action decision lab
 
 on:
   push:

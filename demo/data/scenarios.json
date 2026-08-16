@@ -1,7 +1,7 @@
 {
-  "schema_version": "proofmesh.public-evidence-replay/v1",
+  "schema_version": "proofmesh.public-action-lab/v2",
   "repository": "https://github.com/dingyucanada/ProofMesh",
-  "generated_from": "frozen reference artifacts; no live backend",
+  "generated_from": "browser decision simulator plus frozen reference artifacts; no live backend",
   "scenarios": [
     {
       "id": "automatic",
@@ -14,7 +14,7 @@
       "verification": "evidence/reference/automatic/external-verification.json",
       "proof_sha256": "a987ca1b408d3b300fe68c40ecb56d3869d284dff1a386d563bc1d31f1f3fc4b",
       "facts": {
-        "金额": "¥80.00",
+        "参考金额": "¥80.00",
         "审批": "自动策略",
         "Gateway 回执": "6",
         "包外验真": "15 / 15"
@@ -58,7 +58,7 @@
       "verification": "evidence/reference/human-approval/external-verification.json",
       "proof_sha256": "de262ede0d8ae7a9241393121d83190fe1c5854c7cf2c4a4f0f9ced609bf7561",
       "facts": {
-        "金额": "¥129.00",
+        "参考金额": "¥129.00",
         "审批来源": "外部签名 JWS",
         "Gateway 回执": "5",
         "包外验真": "15 / 15"
@@ -102,7 +102,7 @@
       "verification": "evidence/reference/compensation/external-verification.json",
       "proof_sha256": "f335674b87003af13851ce0c4423afdd184ad48aad9f4804116a664ae395d0b3",
       "facts": {
-        "金额": "¥90.00",
+        "参考金额": "¥90.00（仅为该条 fixture）",
         "CRM": "依赖故障",
         "可退款余额": "已恢复",
         "包外验真": "15 / 15"

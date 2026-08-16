@@ -1,34 +1,28 @@
 # Public demo boundary
 
-The public URL is a **read-only evidence replay**, not a hosted ProofMesh control plane.
+The public URL combines an **interactive browser decision lab** with a **frozen evidence replay**. It is more useful than a slide animation, while remaining safe to expose anonymously.
 
-## What the page does
+## Interactive decision lab
 
-- reads a small, deterministic scenario summary from `demo/data/scenarios.json`;
-- replays the automatic, externally approved, and compensated reference paths;
-- exposes selected frozen proofs and external-verification reports;
-- links each metric to its machine-readable artifact;
-- makes the experimental boundaries visible next to the results.
+Visitors can choose a refund or production-change action, set its risk level and approval state, inject an upstream outcome, and mutate the approved tool, arguments, or context. Client-side logic then explains whether the Gateway would:
 
-## What the page cannot do
+- wait for a signed Human approval;
+- reject a mismatched contract before dispatch;
+- complete a normal action;
+- reconcile a committed action after a lost response;
+- compensate or roll back a confirmed partial execution;
+- stop in `UNKNOWN_MANUAL` when upstream state cannot be established.
 
-- execute a refund, close a ticket, or call any other write-capable tool;
-- accept arbitrary prompts, credentials, workflow IDs, or approval assertions;
-- invoke an LLM or prove model-driven collaboration;
-- connect to Stripe, HubSpot, customer infrastructure, or production identity systems;
-- demonstrate a customer pilot, production SLA, ROI, or real-user outcome.
+The lab uses deterministic rules in `demo/app.js`. It does not execute the Python workflow or assert that a remote control plane ran.
 
-## Why the live API is not exposed
+## Frozen evidence replay
 
-The local FastAPI console mutates an isolated reference database and requires separate role credentials. Publishing it as a shared anonymous service would require per-visitor isolation, quotas, rate limits, payload limits, TTL cleanup, abuse controls, TLS, and a safe external approval path. GitHub Pages does not run Python services. A static replay therefore gives judges a stable, inspectable URL without pretending that a browser animation is a live backend.
+The second part reads `demo/data/scenarios.json`, replays three reference workflows, exposes selected frozen proofs and verification reports, and verifies each proof SHA-256 in the browser.
 
-## Evidence copied to Pages
+## Deliberate safety limits
 
-The deployment workflow publishes only:
+The page cannot execute a refund, close a ticket, deploy software, accept arbitrary prompts, store customer data, invoke an LLM, or connect to Stripe, HubSpot, a customer network, or a production identity system.
 
-- the three reference workflow proofs and their external-verification reports;
-- the AgentDojo authorization-contract replay report;
-- the synthetic independent-process HTTP shadow report;
-- the AgentTeams redacted runtime evidence.
+The local FastAPI console does mutate an isolated reference database and requires separate role credentials. Hosting that API for anonymous users would need per-visitor isolation, quotas, request limits, TTL cleanup, abuse controls, TLS, and a safe external approval service. GitHub Pages cannot provide those controls or run Python.
 
-No private key, bearer token, database, `.env`, customer record, raw public narrative, or runtime workflow directory is included.
+The deployment workflow publishes only selected proofs, verification reports, benchmark summaries, and redacted AgentTeams runtime evidence. It excludes private keys, bearer tokens, databases, `.env` files, customer records, raw public narratives, and runtime workflow directories.

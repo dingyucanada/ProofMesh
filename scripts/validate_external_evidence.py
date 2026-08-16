@@ -19,10 +19,10 @@ EXPECTED_CLAIMS = {
     "stripe_hubspot_sandbox",
     "authorized_historical_pilot",
     "independent_reproduction",
-    "public_repository_and_identity",
+    "public_release_and_maintenance",
     "production_readiness",
 }
-TOP_LEVEL_KEYS = {"schema_version", "policy", "score_target", "claims"}
+TOP_LEVEL_KEYS = {"schema_version", "policy", "claims"}
 CLAIM_KEYS = {
     "id",
     "status",
@@ -138,11 +138,6 @@ def validate(root: Path = ROOT) -> dict[str, Any]:
         raise ExternalEvidenceError("unsupported external claim register schema")
     if not isinstance(register["policy"], str) or "fail-closed" not in register["policy"]:
         raise ExternalEvidenceError("claim register must declare a fail-closed policy")
-    score_target = register["score_target"]
-    if not isinstance(score_target, dict) or set(score_target) != {"engineering", "external_evidence"}:
-        raise ExternalEvidenceError("score_target must separate engineering and external evidence")
-    if any(not isinstance(value, str) or "not " not in value.lower() for value in score_target.values()):
-        raise ExternalEvidenceError("score targets must explicitly disclaim official scoring")
     claims = register["claims"]
     if not isinstance(claims, list) or not all(isinstance(claim, dict) for claim in claims):
         raise ExternalEvidenceError("claims must be an object list")
@@ -185,4 +180,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

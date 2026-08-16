@@ -63,7 +63,7 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         default=PROJECT_ROOT
         / "artifacts/public-benchmark/authorization-contract-replay.md",
-        help="judge-facing result",
+        help="human-readable result",
     )
     parser.add_argument(
         "--limit",
