@@ -1,10 +1,13 @@
-# Public evidence replay
+# Public action decision lab
 
-This directory is the source for the GitHub Pages demo. It is intentionally static and read-only.
+This directory powers the GitHub Pages demo. It has two deliberately separate layers:
 
-The page replays three frozen reference workflows and links to the corresponding proof bundles, external verification reports, AgentDojo authorization replay, and independent-process HTTP fault experiment. The deployment workflow copies only those selected evidence files into the Pages artifact.
+1. a browser-side decision simulator for exploring policy, approval, contract mismatch, reconciliation, compensation, and `UNKNOWN_MANUAL` outcomes;
+2. a replay of three frozen reference workflows with SHA-256 verification and links to their machine-readable proofs.
 
-It does **not** run the FastAPI service, call a model, use payment or CRM accounts, accept customer data, or create side effects. For the real local reference workflow, follow the repository root README.
+The simulator is interactive but deterministic. It implements the documented decision rules in client-side JavaScript and never claims to be a hosted ProofMesh backend. The frozen proofs were produced by the local reference runtime.
+
+The page does not accept free text, credentials, workflow IDs, approval assertions, or customer records. It does not call a model, payment provider, CRM, deployment platform, or FastAPI service.
 
 Local preview:
 
@@ -13,4 +16,4 @@ python3 scripts/build_public_demo.py --output /tmp/proofmesh-pages
 python3 -m http.server 4173 --directory /tmp/proofmesh-pages
 ```
 
-The GitHub Pages deployment uses `.github/workflows/pages.yml`.
+The GitHub Pages workflow is `.github/workflows/pages.yml`.

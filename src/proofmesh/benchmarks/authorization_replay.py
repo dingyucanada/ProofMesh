@@ -1175,7 +1175,7 @@ def _record_attack(
 
 
 def render_markdown(report: Mapping[str, Any]) -> str:
-    """Render the machine report as a concise, judge-facing Markdown artifact."""
+    """Render the machine report as a concise, human-readable Markdown artifact."""
 
     dataset = report["dataset"]
     metrics = report["metrics"]

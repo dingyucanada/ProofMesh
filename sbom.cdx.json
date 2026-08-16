@@ -1,7 +1,7 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:d1dc6323-22a5-b389-e1dc-9390c5502a0c",
+  "serialNumber": "urn:uuid:fb1fa645-716d-e470-495f-5357d8db2f0b",
   "version": 1,
   "metadata": {
     "component": {
@@ -18,7 +18,7 @@
       "properties": [
         {
           "name": "proofmesh:source-manifest-sha256",
-          "value": "d1dc632322a5b389e1dc9390c5502a0c3f5299bc6ca33c059b6c316d9aa1c385"
+          "value": "fb1fa645716de470495f5357d8db2f0b20dfbd26780c0a639be0246b016c7e63"
         },
         {
           "name": "proofmesh:source-file-count",

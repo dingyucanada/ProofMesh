@@ -19,7 +19,7 @@ ProofMesh 的核心主张不是“模型不会受攻击”，而是：给定一�
 | `TKT-HIGH-001` | `WAITING_APPROVAL` | 审批后退款 12900、工单关闭 | 审批只转 `AUTHORIZED`，Executor 后 `COMPLETED` |
 | `TKT-SAGA-001` | 自动策略 | 退款成功、CRM 注入故障、补偿恢复 | `COMPENSATED`，余额恢复、工单开放、Proof Valid |
 
-评委控制台已按实际 HTTP 合同点击验证三条路径；自动化测试同时检查旧 revision 冲突、并发审批只能成功一次、请求者不能审批、计划/范围漂移拒绝、跨租户读取拒绝和角色工具升级拒绝。
+本地控制台已按实际 HTTP 合同验证三条路径；自动化测试同时检查旧 revision 冲突、并发审批只能成功一次、请求者不能审批、计划/范围漂移拒绝、跨租户读取拒绝和角色工具升级拒绝。
 
 ## 3. 网关故障与并发不变量
 
@@ -70,7 +70,7 @@ make validate-agentdojo
 make export-agentdojo AGENTDOJO_PYTHON=/absolute/path/to/agentdojo-0.1.35/bin/python
 ```
 
-评委从发布包解压后应先运行 `make validate-agentdojo`；不依赖开发者工作区中的 `work/` 路径。重新导出属于可选溯源步骤，需要单独安装并锁定官方 AgentDojo 0.1.35。
+复现者从发布包解压后应先运行 `make validate-agentdojo`；不依赖开发者工作区中的 `work/` 路径。重新导出属于可选溯源步骤，需要单独安装并锁定官方 AgentDojo 0.1.35。
 
 ## 5. 授权合同一致性回放
 

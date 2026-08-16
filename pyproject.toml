@@ -26,6 +26,11 @@ production = ["psycopg[binary]==3.2.9"]
 proofmesh = "proofmesh.cli:main"
 proofmesh-mcp = "proofmesh.mcp_server:main"
 
+[project.urls]
+Homepage = "https://dingyucanada.github.io/ProofMesh/"
+Repository = "https://github.com/dingyucanada/ProofMesh"
+Issues = "https://github.com/dingyucanada/ProofMesh/issues"
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 include-package-data = true

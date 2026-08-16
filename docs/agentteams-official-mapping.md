@@ -60,7 +60,7 @@ flowchart LR
 
 选择 AgentTeams 首先是赛题强制要求，其次是它的原生 Human / Worker / Team 资源、TeamHarness Project / Task 状态流、Matrix 协作面和 MCP / Skill 接口与本项目“角色职责分离 + 可审计交接”一致。ProofMesh 没有在 AgentTeams 外另造一个同名编排器来规避框架。
 
-竞赛提交中 **AgentTeams 不可替换**。在赛后产品化中，可替换的是模型 provider、Worker runtime、对象存储、Matrix 展示面以及支付/CRM/记忆后端；替换必须保留以下合同：稳定 Project/Task ID、显式 DAG 与前驱 digest、角色身份、可暂停的 Human gate、幂等任务状态、结果摘要和审计 trace。ProofMesh 的 Action Passport、Gateway 与 Proof Verifier 不依赖某个模型厂商，但仍通过适配层与 AgentTeams 协同账本关联。
+ProofMesh 把 **AgentTeams 作为协作平面**。产品化时可替换模型 provider、Worker runtime、对象存储、Matrix 展示面以及支付/CRM/记忆后端；替换必须保留稳定 Project/Task ID、显式 DAG 与前驱 digest、角色身份、可暂停的 Human gate、幂等任务状态、结果摘要和审计 trace。ProofMesh 的 Action Passport、Gateway 与 Proof Verifier 不依赖某个模型厂商，但仍通过适配层与 AgentTeams 协同账本关联。
 
 ## 6. `v1.2.2` 迁移门禁与成本
 

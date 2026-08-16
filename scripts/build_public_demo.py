@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the narrowly scoped, read-only GitHub Pages artifact."""
+"""Build the narrowly scoped interactive GitHub Pages artifact."""
 
 from __future__ import annotations
 
@@ -97,7 +97,8 @@ def build(output: Path) -> dict:
 
     manifest = {
         "schema_version": "proofmesh.public-demo-manifest/v1",
-        "mode": "READ_ONLY_EVIDENCE_REPLAY",
+        "mode": "INTERACTIVE_DECISION_LAB_WITH_FROZEN_EVIDENCE",
+        "decision_engine": "CLIENT_SIDE_DETERMINISTIC_SIMULATION",
         "live_backend": False,
         "model_driven": False,
         "customer_data": False,
@@ -117,7 +118,7 @@ def main() -> None:
     args = parser.parse_args()
     manifest = build(args.output)
     print(
-        f"built {manifest['file_count']} read-only files at "
+        f"built {manifest['file_count']} public demo files at "
         f"{args.output.resolve()} (live_backend=false, model_driven=false)"
     )
 

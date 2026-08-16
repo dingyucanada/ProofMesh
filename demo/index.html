@@ -5,67 +5,187 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="ProofMesh 只读证据回放：查看 AgentTeams、Action Passport、崩溃对账与包外验真的冻结运行证据。"
+      content="ProofMesh 交互式动作决策台：调整风险、审批、故障和合同参数，观察 Agent 写操作如何被授权、对账、补偿或拒绝。"
     />
-    <title>ProofMesh｜只读证据回放</title>
+    <title>ProofMesh｜Agent 动作决策台</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
   </head>
   <body>
-    <a class="skip-link" href="#demo">跳到回放</a>
+    <a class="skip-link" href="#lab">跳到动作决策台</a>
     <header class="topbar">
       <a class="brand" href="#top" aria-label="ProofMesh 首页">
         <span class="brand-mark" aria-hidden="true">P</span>
         <span>ProofMesh</span>
       </a>
       <nav aria-label="页面导航">
-        <a href="#demo">回放</a>
-        <a href="#evidence">证据</a>
-        <a href="#boundary">边界</a>
-        <a class="repo-link" data-repo-link href="https://github.com/dingyucanada/ProofMesh">查看代码</a>
+        <a href="#problem">行业问题</a>
+        <a href="#lab">动手试</a>
+        <a href="#evidence">运行证据</a>
+        <a class="repo-link" data-repo-link href="https://github.com/dingyucanada/ProofMesh">GitHub</a>
       </nav>
     </header>
 
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow">READ-ONLY EVIDENCE REPLAY · 非实时后端</p>
-          <h1 id="hero-title">退款已经成功，CRM 却失败。<br />Agent 该不该再试一次？</h1>
+          <p class="eyebrow">AGENT ACTION CONTROL PLANE</p>
+          <h1 id="hero-title">Agent 会调用工具之后，谁来管住它的下一步？</h1>
           <p class="lede">
-            ProofMesh 不让 Agent 猜。它先核对动作通行证，再向上游对账；结果查不清，就停在人工处理，不盲目重试。
+            退款、发布、配置变更都会改变真实业务状态。ProofMesh 在 AgentTeams 和企业工具之间核对每一次动作；遇到超时先查上游，结果不明就停。
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#demo">播放三条冻结路径</a>
-            <a class="button secondary" data-repo-link href="https://github.com/dingyucanada/ProofMesh">10 分钟本地复现</a>
+            <a class="button primary" href="#lab">自己设一个故障</a>
+            <a class="button secondary" data-repo-link href="https://github.com/dingyucanada/ProofMesh">查看源代码</a>
           </div>
         </div>
-        <aside class="truth-card" aria-label="演示边界">
-          <span class="status-dot" aria-hidden="true"></span>
-          <p class="truth-title">这是什么</p>
-          <p>浏览器中的确定性证据回放。页面读取仓库内冻结的 Proof、验真报告和基准摘要。</p>
-          <p class="truth-title">这不是什么</p>
-          <p>不是在线支付，不连接 CRM，不调用大模型，也不是客户试点。</p>
+        <aside class="hero-proof" aria-label="核心能力">
+          <p class="hero-proof-label">一次写操作必须回答</p>
+          <ol>
+            <li><span>01</span>谁在为哪个租户做事？</li>
+            <li><span>02</span>允许调用什么工具和参数？</li>
+            <li><span>03</span>这次审批批准了什么？</li>
+            <li><span>04</span>响应丢了以后还能不能重试？</li>
+          </ol>
         </aside>
       </section>
 
-      <section class="flow-strip" aria-label="系统流程">
-        <span>AgentTeams 分工</span><b aria-hidden="true">→</b>
-        <span>动作通行证</span><b aria-hidden="true">→</b>
-        <span>Action Gateway</span><b aria-hidden="true">→</b>
-        <span>对账与补偿</span><b aria-hidden="true">→</b>
-        <span>包外验真</span>
-      </section>
-
-      <section class="demo-section" id="demo" aria-labelledby="demo-title">
+      <section class="problem-section" id="problem" aria-labelledby="problem-title">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">THREE FROZEN PATHS</p>
-            <h2 id="demo-title">同一笔动作，三种不同结局</h2>
+            <p class="eyebrow">THE MISSING CONTROL</p>
+            <h2 id="problem-title">权限系统管长期身份，企业还需要管住“这一次”</h2>
           </div>
-          <p>选一条路径，再逐步播放。每一步都对应仓库内可以复算的证据。</p>
+          <p>一个角色有权调用接口，不等于它可以在任意时间、用任意参数、重复执行同一个动作。</p>
+        </div>
+        <div class="problem-grid">
+          <article>
+            <span class="problem-number">01</span>
+            <h3>报错可能发生在执行之后</h3>
+            <p>支付已成功、响应却超时；发布已提交、回执却丢失。直接重试可能制造第二个副作用。</p>
+          </article>
+          <article>
+            <span class="problem-number">02</span>
+            <h3>审批后计划仍可能变化</h3>
+            <p>审批人看过原金额或原变更范围，执行时的参数却可能已经漂移。</p>
+          </article>
+          <article>
+            <span class="problem-number">03</span>
+            <h3>日志通常由执行方自己解释</h3>
+            <p>审计者需要从系统外加载信任材料，重新核对审批、回执和最终业务状态。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="solution-strip" aria-label="ProofMesh 处理流程">
+        <span><strong>AgentTeams</strong> 分工</span>
+        <b aria-hidden="true">→</b>
+        <span><strong>Action Passport</strong> 冻结本次许可</span>
+        <b aria-hidden="true">→</b>
+        <span><strong>Gateway</strong> 执行前核对</span>
+        <b aria-hidden="true">→</b>
+        <span><strong>Reconcile</strong> 失败后先对账</span>
+        <b aria-hidden="true">→</b>
+        <span><strong>Verifier</strong> 包外复核</span>
+      </section>
+
+      <section class="lab-section" id="lab" aria-labelledby="lab-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">INTERACTIVE DECISION LAB</p>
+            <h2 id="lab-title">给系统一个场景，看它会不会冒险</h2>
+          </div>
+          <p>这是浏览器中的确定性协议模拟。它不调用真实后端，但会按同一套门禁和故障规则解释每个决定。</p>
         </div>
 
-        <div class="scenario-tabs" id="scenario-tabs" role="tablist" aria-label="选择回放场景"></div>
+        <div class="lab-grid">
+          <form class="lab-controls" id="lab-form">
+            <fieldset>
+              <legend>1. 选择业务动作</legend>
+              <div class="segmented" role="radiogroup" aria-label="业务动作">
+                <label><input type="radio" name="domain" value="refund" checked /><span>客服退款</span></label>
+                <label><input type="radio" name="domain" value="operations" /><span>生产变更</span></label>
+              </div>
+            </fieldset>
+
+            <div class="control-row">
+              <label>
+                <span>风险等级</span>
+                <select id="risk-input">
+                  <option value="low">低风险，可自动处理</option>
+                  <option value="high">高风险，需要审批</option>
+                </select>
+              </label>
+              <label>
+                <span>审批状态</span>
+                <select id="approval-input">
+                  <option value="missing">尚未审批</option>
+                  <option value="signed">已有外部签名审批</option>
+                </select>
+              </label>
+            </div>
+
+            <label>
+              <span>上游返回什么</span>
+              <select id="outcome-input">
+                <option value="success">正常成功</option>
+                <option value="timeout_committed">执行已发生，但响应超时</option>
+                <option value="downstream_failure">第一步成功，后续系统失败</option>
+                <option value="unknown">对账后仍无法判断</option>
+              </select>
+            </label>
+
+            <fieldset>
+              <legend>2. 要不要篡改合同</legend>
+              <div class="mutation-grid" role="radiogroup" aria-label="合同变化">
+                <label><input type="radio" name="mutation" value="none" checked /><span>不改</span></label>
+                <label><input type="radio" name="mutation" value="arguments" /><span>换参数</span></label>
+                <label><input type="radio" name="mutation" value="tool" /><span>换工具</span></label>
+                <label><input type="radio" name="mutation" value="context" /><span>换上下文</span></label>
+              </div>
+            </fieldset>
+
+            <button class="button primary wide" type="submit">运行这次决策</button>
+            <p class="form-note">不要输入真实订单号、凭证或客户信息；这个页面也没有文本输入框。</p>
+          </form>
+
+          <div class="decision-panel" aria-live="polite">
+            <div class="decision-head">
+              <div>
+                <p class="eyebrow">GATEWAY DECISION</p>
+                <h3 id="decision-title">等待运行</h3>
+              </div>
+              <span class="decision-badge" id="decision-badge">READY</span>
+            </div>
+            <p class="decision-summary" id="decision-summary">选择条件后运行，系统会说明是否执行、是否对账，以及最终由谁接手。</p>
+            <ol class="decision-steps" id="decision-steps"></ol>
+            <div class="decision-footer">
+              <div><span>业务工具调用</span><strong id="dispatch-count">0</strong></div>
+              <div><span>自动重复执行</span><strong id="duplicate-count">0</strong></div>
+              <div><span>最终状态</span><strong id="terminal-state">—</strong></div>
+            </div>
+          </div>
+
+          <aside class="passport-panel" aria-labelledby="passport-title">
+            <p class="eyebrow">ACTION PASSPORT</p>
+            <h3 id="passport-title">这次动作的许可证</h3>
+            <p>许可证只描述本次动作。换工具、换参数或换上下文，Gateway 都会在调用上游前拒绝。</p>
+            <dl id="passport-fields"></dl>
+            <pre id="passport-json" tabindex="0" aria-label="Action Passport 结构化预览"></pre>
+          </aside>
+        </div>
+      </section>
+
+      <section class="demo-section" id="replay" aria-labelledby="demo-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">FROZEN EXECUTION EVIDENCE</p>
+            <h2 id="demo-title">模拟负责解释，冻结 Proof 负责证明</h2>
+          </div>
+          <p>下面三条路径由本地参考后端真实执行并封存。可以逐步回放，并在浏览器里复核 Proof 的 SHA-256。</p>
+        </div>
+
+        <div class="scenario-tabs" id="scenario-tabs" role="tablist" aria-label="选择证据路径"></div>
 
         <div class="replay-grid">
           <article class="replay-panel" aria-live="polite">
@@ -77,9 +197,7 @@
               <span class="terminal-badge" id="terminal-badge"></span>
             </div>
             <p class="scenario-summary" id="scenario-summary"></p>
-
             <ol class="timeline" id="timeline"></ol>
-
             <div class="replay-controls">
               <button class="button secondary" id="reset-button" type="button">重新开始</button>
               <button class="button primary" id="next-button" type="button">下一步</button>
@@ -108,19 +226,17 @@
         <div class="section-heading">
           <div>
             <p class="eyebrow">WHAT HAS ACTUALLY RUN</p>
-            <h2 id="evidence-title">四组实验，各回答一个问题</h2>
+            <h2 id="evidence-title">每组实验只回答一个问题</h2>
           </div>
-          <p>数字只按各自的实验边界解释，不把公开数据或合成故障写成客户成绩。</p>
+          <p>公开数据、合成故障与本地参考路径分开报告，不把它们合并成客户成绩。</p>
         </div>
         <div class="metric-grid" id="metric-grid"></div>
 
         <div class="agentteams-card">
           <div>
             <p class="eyebrow">AGENTTEAMS RUNTIME</p>
-            <h3>协同控制面真的跑过，但模型自主协同还没有。</h3>
-            <p>
-              已验证基线为 AgentTeams v1.2.0-beta.1：Team Active、7/7 Worker Running，跨两个真实容器完成 direct MCP 生命周期 7/7。
-            </p>
+            <h3>协同控制面已经跑通，模型自主协作还没有。</h3>
+            <p>已验证 AgentTeams v1.2.0-beta.1：Team Active、7/7 Worker Running，并在两个真实容器间完成 direct MCP 生命周期 7/7。</p>
           </div>
           <div class="runtime-facts" aria-label="AgentTeams 运行事实">
             <span><strong>1 + 6</strong>Leader + Workers</span>
@@ -132,26 +248,26 @@
 
       <section class="boundary-section" id="boundary" aria-labelledby="boundary-title">
         <div>
-          <p class="eyebrow">HONEST BOUNDARY</p>
-          <h2 id="boundary-title">这个链接证明什么，也说明还缺什么</h2>
+          <p class="eyebrow">CURRENT BOUNDARY</p>
+          <h2 id="boundary-title">现在能验证什么，下一步还要补什么</h2>
         </div>
         <div class="boundary-grid">
           <article>
-            <h3>已经能复核</h3>
+            <h3>仓库内可复核</h3>
             <ul>
-              <li>冻结 Proof 的哈希和 15 项包外验真结果</li>
-              <li>授权参数错配被 Gateway 拦截</li>
-              <li>超时后先对账，未知状态停止自动重试</li>
-              <li>AgentTeams 控制面与 direct MCP 生命周期</li>
+              <li>动作合同的工具、参数与上下文绑定</li>
+              <li>故障后的对账、补偿和 UNKNOWN 停机</li>
+              <li>冻结 Proof 的哈希与包外验真结果</li>
+              <li>AgentTeams 控制面和 direct MCP 生命周期</li>
             </ul>
           </article>
           <article>
-            <h3>仍未完成</h3>
+            <h3>尚未完成</h3>
             <ul>
-              <li>模型驱动的七 Agent 自主协同</li>
+              <li>模型驱动的七 Agent 自主协作</li>
               <li>真实 Stripe、HubSpot 或企业系统账户</li>
-              <li>客户授权工单与生产试点</li>
-              <li>企业 IdP、KMS、PostgreSQL 与 SLA 验证</li>
+              <li>客户授权数据与生产试点</li>
+              <li>企业 IdP、KMS、托管数据库与 SLA 验证</li>
             </ul>
           </article>
         </div>
@@ -159,9 +275,9 @@
     </main>
 
     <footer>
-      <p>ProofMesh · Apache-2.0 · 冻结证据回放</p>
-      <p>本页面不收集输入，不调用后端，不产生业务副作用。</p>
+      <p>ProofMesh · Apache-2.0 · Agent Action Control Plane</p>
+      <p>浏览器实验不收集输入，不调用后端，不产生业务副作用。</p>
     </footer>
-    <noscript>此回放需要 JavaScript。所有原始证据仍可在 GitHub 仓库中直接查看。</noscript>
+    <noscript>这个动作决策台需要 JavaScript。冻结证据仍可在 GitHub 仓库中直接查看。</noscript>
   </body>
 </html>
