@@ -1,0 +1,65 @@
+{
+  "summary": {
+    "workflow_id": "ops-ecef72bb652d4fe7892800827bf366fb",
+    "project_id": "ops-ecef72bb652d4fe7892800827bf366fb",
+    "domain": "production-operations-change",
+    "change_id": "CHG-UNKNOWN-001",
+    "tenant_id": "acme-cn",
+    "requester": "reference-ops-requester",
+    "status": "UNKNOWN_MANUAL",
+    "revision": 2,
+    "created_at": "2026-08-13T13:47:14.457099Z",
+    "updated_at": "2026-08-13T13:47:14.468546Z",
+    "context_digest": "3b138235963483d39631c224779cca5bca414cdafa528f29a4e593f8599e23ba",
+    "policy_digest": "631126426a3224987e4c1f984f56eea894677cf53bcb5ee7beef40c42972e0dc",
+    "plan_digest": "8c6ebf78df508cc09654590e7491553adf1fea3eb20f61d76f2c8df90e2911b9",
+    "approval_required": false,
+    "approval_scope": [
+      "ops.apply_config"
+    ],
+    "approval_digest": "AUTOMATIC",
+    "risk_units": 25,
+    "final_message": "上游提交状态不可判定；Gateway 已冻结逻辑操作并停止自动重试。",
+    "proof_bundle": null,
+    "gateway_receipt_count": 2
+  },
+  "operation": {
+    "operation_id": "op-e126dafcfcc3483aac80c8482414d045",
+    "status": "UNKNOWN",
+    "unknown_reason": "upstream_commit_state_unavailable"
+  },
+  "business_snapshot": {
+    "workflow_id": "ops-ecef72bb652d4fe7892800827bf366fb",
+    "change": {
+      "change_id": "CHG-UNKNOWN-001",
+      "tenant_id": "acme-cn",
+      "service_id": "svc-checkout",
+      "patch_json": "{\"max_inflight\":96}",
+      "risk_units": 25,
+      "blast_radius": "single-service",
+      "force_health_failure": 0,
+      "force_unknown_apply": 1,
+      "status": "OPEN",
+      "workflow_id": null
+    },
+    "execution": null,
+    "service": {
+      "service_id": "svc-checkout",
+      "tenant_id": "acme-cn",
+      "environment": "production",
+      "config_json": "{\"checkout_timeout_ms\":1500,\"max_inflight\":80}",
+      "version": 7,
+      "health": "HEALTHY",
+      "config": {
+        "checkout_timeout_ms": 1500,
+        "max_inflight": 80
+      }
+    }
+  },
+  "tool_execution_count": 2,
+  "assertions": {
+    "gateway_status_unknown": true,
+    "automatic_redispatch_stopped": true,
+    "no_claim_of_known_business_commit": true
+  }
+}

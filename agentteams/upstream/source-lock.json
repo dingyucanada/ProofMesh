@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "proofmesh.io/agentteams-upstream-patch-lock/v1",
+  "upstream": {
+    "repository": "https://github.com/agentscope-ai/AgentTeams",
+    "release": "v1.2.0-beta.1",
+    "commit": "78d0ceda336befa6e62bf89fc1a6b08b965e128d"
+  },
+  "patch": {
+    "path": "agentteams-v1.2.0-beta.1-manager-worker-members.patch",
+    "sha256": "1bb1ae7c2303d6e0c0932565c7391d01d38cb570d60317b25be40be73deac270"
+  },
+  "baseFiles": {
+    "hiclaw-controller/internal/server/types.go": "c84db8a4ae7cee715c300beab44e3bc7726bc3130f75266e4cfed1960541e166",
+    "hiclaw-controller/internal/server/resource_handler.go": "bdc99ee71b91404123cf45ca3a86add82d1b160ae9bdb31ce65a341e217af897",
+    "hiclaw-controller/internal/server/resource_handler_test.go": "ead85d59de842d758d4ff8fef642dee9c11e4c62d0a9ed6bb38f174f6ea14ae7"
+  },
+  "expectedContract": {
+    "createRequestAcceptsWorkerMembers": true,
+    "workerMembersBypassesLegacyLeaderRequirement": true,
+    "workerMembersCopiedToTeamSpec": true,
+    "legacyLeaderValidationPreservedWhenWorkerMembersEmpty": true,
+    "legacyLeaderAndWorkersMappingPreserved": true,
+    "testsAdded": [
+      "TestCreateTeamWithWorkerMembersUsesDecoupledPath",
+      "TestCreateTeamWithoutWorkerMembersStillRequiresLegacyLeader",
+      "TestCreateTeamWithWorkerMembersTakesPrecedenceOverLegacyFields"
+    ]
+  }
+}

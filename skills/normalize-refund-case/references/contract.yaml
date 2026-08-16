@@ -1,0 +1,38 @@
+schema_version: proofmesh.skill-contract/v1
+skill:
+  name: normalize-refund-case
+  version: 1.0.0
+  role: ticket-intake
+  purpose: Produce a canonical, tenant-bound and deduplicated refund request envelope.
+invocation:
+  trigger: The normalize task is assigned with the create-node output.
+  preconditions: [workflow_id, expected_revision and task_id are present, persisted workflow status is RECEIVED]
+inputs:
+  schema: references/input.schema.json
+  confidentiality: restricted
+  integrity: rely on ProofMesh persisted identifiers and revision CAS rather than message-carried business fields
+outputs:
+  schema: references/output.schema.json
+  success_conditions: [status is NORMALIZED, revision equals expected_revision plus one, last_step is normalize_case]
+dependencies:
+  teamharness: [taskflow]
+  mcp_tools: [proofmesh.normalize_case]
+  contracts: [proofmesh-role-tasks/v1, proofmesh.task-step-receipt/v1]
+execution:
+  idempotency_key: workflow_id + expected_revision + task_id; CAS prevents double transition
+  steps: [ack-task, validate-tool-input, call-normalize-case, validate-normalized-summary, submit-task]
+  timeout_seconds: 20
+failure_policy:
+  retry: {max_attempts: 2, backoff: fixed, only: [PM-INTAKE-003]}
+  terminal_errors: [PM-INTAKE-001, PM-INTAKE-002, PM-INTAKE-004]
+  on_failure: Submit a BLOCKED TeamHarness result with a documented error code; do not emit a success output.
+security:
+  allowed: [normalize identifiers, compute digests, check dedupe index]
+  denied: [read business records, score risk, approve or mutate refund, infer identity, copy raw PII to chat, call Leader-only message]
+verification:
+  checks: [input-schema, expected-revision, normalized-status, revision-increment, signed-task-receipt-count]
+  evidence: [workflow_id, task_id, revision, status, last_step, context_digest, task_receipt_count]
+reuse:
+  stateless: true
+  isolation_key: tenant_id
+  compatible_with: [AgentTeams-v1.2.0-beta.1, QwenPaw, ProofMesh-refund-v1]

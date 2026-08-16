@@ -1,0 +1,38 @@
+schema_version: proofmesh.skill-contract/v1
+skill:
+  name: verify-refund-outcome
+  version: 1.0.0
+  role: outcome-verifier
+  purpose: Produce an independent cryptographic and business-state verdict for a refund execution.
+invocation:
+  trigger: The verify task is assigned after the execute step returns a verifiable execution candidate.
+  preconditions: [workflow_id, expected_revision and task_id are present, persisted workflow status is EXECUTED]
+inputs:
+  schema: references/input.schema.json
+  confidentiality: confidential
+  integrity: bind fresh server-side business read-back to the persisted plan and execution outcome; the final proof bundle does not exist until memory sealing
+outputs:
+  schema: references/output.schema.json
+  success_conditions: [status is VERIFIED, COMPENSATED or explicitly BLOCKED, revision increments once, only a verified status may release memory]
+dependencies:
+  teamharness: [taskflow]
+  mcp_tools: [proofmesh.verify_outcome]
+  contracts: [proofmesh-role-tasks/v1, proofmesh.refund-proof/v1, signed-gateway-receipt/v1, proofmesh.task-step-receipt/v1]
+execution:
+  idempotency_key: workflow_id + expected_revision + task_id; CAS prevents double transition
+  steps: [ack-task, validate-tool-input, call-verify-outcome, validate-verified-compensated-or-blocked-summary, submit-task]
+  timeout_seconds: 45
+failure_policy:
+  retry: {max_attempts: 2, backoff: fixed, only: [PM-VERIFY-004]}
+  terminal_errors: [PM-VERIFY-001, PM-VERIFY-002, PM-VERIFY-003, PM-VERIFY-005, PM-VERIFY-006]
+  on_failure: Return valid false with failed check names; never mutate or replace evidence.
+security:
+  allowed: [read proof artifact, read pinned public keys, perform fresh read-only state query]
+  denied: [business mutation, approval, evidence repair, executor MCP route, private signing key access, call Leader-only message]
+verification:
+  checks: [input-schema, revision-cas, allowed-verification-status, revision-increment, next-step-gate, signed-task-receipt-count]
+  evidence: [workflow_id, task_id, revision, status, context_digest, policy_digest, plan_digest, task_receipt_count]
+reuse:
+  stateless: true
+  isolation_key: workflow_id + expected_revision
+  compatible_with: [AgentTeams-v1.2.0-beta.1, QwenPaw, ProofMesh-refund-v1]

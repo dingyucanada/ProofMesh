@@ -1,0 +1,25 @@
+schemaVersion: proofmesh.io/agentteams-schema-lock/v1
+release: v1.2.0-beta.1
+commit: 78d0ceda336befa6e62bf89fc1a6b08b965e128d
+sources:
+  human: https://github.com/agentscope-ai/AgentTeams/blob/78d0ceda336befa6e62bf89fc1a6b08b965e128d/helm/hiclaw/crds/humans.agentteams.io.yaml
+  worker: https://github.com/agentscope-ai/AgentTeams/blob/78d0ceda336befa6e62bf89fc1a6b08b965e128d/helm/hiclaw/crds/workers.agentteams.io.yaml
+  team: https://github.com/agentscope-ai/AgentTeams/blob/78d0ceda336befa6e62bf89fc1a6b08b965e128d/helm/hiclaw/crds/teams.agentteams.io.yaml
+  qwenpawE2E: https://github.com/agentscope-ai/AgentTeams/blob/78d0ceda336befa6e62bf89fc1a6b08b965e128d/tests/test-26-qwenpaw-teamharness-plugin-mode.sh
+contract:
+  apiVersion: agentteams.io/v1beta1
+  Human:
+    requiredSpec: [displayName, permissionLevel]
+    allowedSpec: [displayName, username, email, permissionLevel, accessibleTeams, accessibleWorkers, identitySource, note]
+    permissionLevels: [1, 2, 3]
+  Worker:
+    requiredSpec: [model]
+    allowedSpec: [model, modelProvider, runtime, image, workerName, identity, soul, agents, skills, remoteSkills, mcpServers, package, expose, channelPolicy, channels, containerManaged, resources, idleTimeout, state, deployMode, serviceEnabled, backendRuntime, labels, env, agentIdentity, credentialBindings, accessEntries]
+    runtimes: [openclaw, copaw, hermes, qwenpaw]
+    states: [Running, Sleeping, Stopped]
+    deployModes: [Local, Edge]
+    backendRuntimes: [pod]
+    mcpTransports: [http, sse]
+  Team:
+    allowedSpec: [description, teamName, workerMembers, peerMentions, channelPolicy, heartbeatEvery, admin, humanMembers, leader, workers]
+    memberRoles: [team_leader, worker]

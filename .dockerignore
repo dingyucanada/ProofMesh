@@ -1,0 +1,15 @@
+.env
+.venv
+.pytest_cache
+.ruff_cache
+**/__pycache__
+**/*.pyc
+agentteams
+artifacts
+docs
+tests
+var
+work
+*.pptx
+*.pdf
+*.docx

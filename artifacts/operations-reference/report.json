@@ -1,0 +1,70 @@
+{
+  "schema_version": "proofmesh.operations-reference-report/v1",
+  "domain": "production-operations-change",
+  "case_count": 4,
+  "cases": [
+    {
+      "slug": "automatic-success",
+      "change_id": "CHG-LOW-001",
+      "workflow_id": "ops-cb07555a611347faa214cc151ebd50a0",
+      "terminal_status": "COMPLETED",
+      "approval_required": false,
+      "proof": "automatic-success/workflow-proof.json",
+      "external_verification": "automatic-success/external-verification.json",
+      "waiting_evidence": null
+    },
+    {
+      "slug": "external-approval-success",
+      "change_id": "CHG-HIGH-001",
+      "workflow_id": "ops-da7ba287504d462c9f276ced8babe8b7",
+      "terminal_status": "COMPLETED",
+      "approval_required": true,
+      "proof": "external-approval-success/workflow-proof.json",
+      "external_verification": "external-approval-success/external-verification.json",
+      "waiting_evidence": "external-approval-success/waiting-approval.json"
+    },
+    {
+      "slug": "verified-compensation",
+      "change_id": "CHG-ROLLBACK-001",
+      "workflow_id": "ops-62875d07289f466daa11d7e7c406d38d",
+      "terminal_status": "COMPENSATED",
+      "approval_required": false,
+      "proof": "verified-compensation/workflow-proof.json",
+      "external_verification": "verified-compensation/external-verification.json",
+      "waiting_evidence": null
+    },
+    {
+      "slug": "unknown-manual",
+      "change_id": "CHG-UNKNOWN-001",
+      "workflow_id": "ops-ecef72bb652d4fe7892800827bf366fb",
+      "terminal_status": "UNKNOWN_MANUAL",
+      "approval_required": false,
+      "proof": null,
+      "external_verification": null,
+      "waiting_evidence": null
+    }
+  ],
+  "protocol_reuse": {
+    "shared_components": [
+      "ActionPassportClaims",
+      "AuthorizedToolCaller",
+      "ActionGateway",
+      "GatewayStore",
+      "ExternalTrustVerifier",
+      "ExecutionReceipt",
+      "EvidenceLedger"
+    ],
+    "domain_specific_components": [
+      "OperationsSandbox adapter",
+      "operations_change_policy.json",
+      "operations plan and terminal invariants"
+    ]
+  },
+  "claim_boundaries": {
+    "production_cluster": false,
+    "customer_data": false,
+    "external_cloud_account": false,
+    "unknown_lease_expiry_hook_is_production_api": false,
+    "purpose": "deterministic local cross-domain protocol-reuse evidence"
+  }
+}

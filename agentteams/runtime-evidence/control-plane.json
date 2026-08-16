@@ -1,0 +1,191 @@
+{
+  "schemaVersion": "proofmesh.io/agentteams-runtime-evidence/v1",
+  "capturedAt": "2026-08-13T20:50:22+08:00",
+  "agentTeams": {
+    "release": "v1.2.0-beta.1",
+    "commit": "78d0ceda336befa6e62bf89fc1a6b08b965e128d"
+  },
+  "scope": {
+    "officialControlPlaneExecuted": true,
+    "modelDrivenCollaborationVerified": false,
+    "directMcpControlPlaneLifecycleVerified": true,
+    "staticValidatorQueriesLiveRuntime": false
+  },
+  "controller": {
+    "containerState": "running",
+    "image": "proofmesh/agentteams-embedded:v1.2.0-beta.1-workerMembers1",
+    "imageDigest": "sha256:989e50aa15d185701b814a0f6b950552770082d02665837e4c8117a48d70f067",
+    "officialParentDigest": "sha256:4467037493afa32b0a13f7fc6e0054b6e8e694067c7a7c33937cf930b86b8447",
+    "patchSha256": "1bb1ae7c2303d6e0c0932565c7391d01d38cb570d60317b25be40be73deac270",
+    "binarySha256": "510e744bd5fb207b72cc5ca8dc13cfa07b7e37d932fb6b906e4b074a59cfdc31"
+  },
+  "manager": {
+    "name": "default",
+    "phase": "Running",
+    "runtime": "copaw",
+    "model": "proofmesh-local",
+    "welcomeSent": false,
+    "containerState": "running",
+    "image": "higress-registry.cn-hangzhou.cr.aliyuncs.com/agentteams/agentteams-manager-copaw:v1.2.0-beta.1"
+  },
+  "human": {
+    "name": "proofmesh-approver",
+    "phase": "Active"
+  },
+  "workers": [
+    {
+      "name": "case-orchestrator",
+      "phase": "Running",
+      "runtime": "qwenpaw",
+      "image": "proofmesh/agentteams-qwenpaw-worker:v1.2.0-beta.1-compat2",
+      "containerState": "running",
+      "skill": "orchestrate-refund-case",
+      "assetsPresent": true,
+      "teamHarness": {
+        "health": {"ok": true, "plugin": "teamharness", "adapter": "qwenpaw"},
+        "probeSurface": "qwenpaw-http-plugin-endpoint"
+      },
+      "mcpProjection": {
+        "roleEndpoint": "http://proofmesh:8000/mcp/roles/orchestrator",
+        "urlMatches": true,
+        "transport": "http",
+        "authorizationProjected": true
+      }
+    },
+    {
+      "name": "ticket-intake",
+      "phase": "Running",
+      "runtime": "qwenpaw",
+      "image": "proofmesh/agentteams-qwenpaw-worker:v1.2.0-beta.1-compat2",
+      "containerState": "running",
+      "skill": "normalize-refund-case",
+      "assetsPresent": true,
+      "teamHarness": {
+        "health": {"ok": true, "plugin": "teamharness", "adapter": "qwenpaw"},
+        "probeSurface": "qwenpaw-http-plugin-endpoint"
+      },
+      "mcpProjection": {
+        "roleEndpoint": "http://proofmesh:8000/mcp/roles/intake",
+        "urlMatches": true,
+        "transport": "http",
+        "authorizationProjected": true
+      }
+    },
+    {
+      "name": "context-investigator",
+      "phase": "Running",
+      "runtime": "qwenpaw",
+      "image": "proofmesh/agentteams-qwenpaw-worker:v1.2.0-beta.1-compat2",
+      "containerState": "running",
+      "skill": "collect-refund-context",
+      "assetsPresent": true,
+      "teamHarness": {
+        "health": {"ok": true, "plugin": "teamharness", "adapter": "qwenpaw"},
+        "probeSurface": "qwenpaw-http-plugin-endpoint"
+      },
+      "mcpProjection": {
+        "roleEndpoint": "http://proofmesh:8000/mcp/roles/investigator",
+        "urlMatches": true,
+        "transport": "http",
+        "authorizationProjected": true
+      }
+    },
+    {
+      "name": "risk-policy-sentinel",
+      "phase": "Running",
+      "runtime": "qwenpaw",
+      "image": "proofmesh/agentteams-qwenpaw-worker:v1.2.0-beta.1-compat2",
+      "containerState": "running",
+      "skill": "evaluate-refund-policy",
+      "assetsPresent": true,
+      "teamHarness": {
+        "health": {"ok": true, "plugin": "teamharness", "adapter": "qwenpaw"},
+        "probeSurface": "qwenpaw-http-plugin-endpoint"
+      },
+      "mcpProjection": {
+        "roleEndpoint": "http://proofmesh:8000/mcp/roles/policy",
+        "urlMatches": true,
+        "transport": "http",
+        "authorizationProjected": true
+      }
+    },
+    {
+      "name": "action-executor",
+      "phase": "Running",
+      "runtime": "qwenpaw",
+      "image": "proofmesh/agentteams-qwenpaw-worker:v1.2.0-beta.1-compat2",
+      "containerState": "running",
+      "skill": "execute-refund-saga",
+      "assetsPresent": true,
+      "teamHarness": {
+        "health": {"ok": true, "plugin": "teamharness", "adapter": "qwenpaw"},
+        "probeSurface": "qwenpaw-http-plugin-endpoint"
+      },
+      "mcpProjection": {
+        "roleEndpoint": "http://proofmesh:8000/mcp/roles/executor",
+        "urlMatches": true,
+        "transport": "http",
+        "authorizationProjected": true
+      }
+    },
+    {
+      "name": "outcome-verifier",
+      "phase": "Running",
+      "runtime": "qwenpaw",
+      "image": "proofmesh/agentteams-qwenpaw-worker:v1.2.0-beta.1-compat2",
+      "containerState": "running",
+      "skill": "verify-refund-outcome",
+      "assetsPresent": true,
+      "teamHarness": {
+        "health": {"ok": true, "plugin": "teamharness", "adapter": "qwenpaw"},
+        "probeSurface": "qwenpaw-http-plugin-endpoint"
+      },
+      "mcpProjection": {
+        "roleEndpoint": "http://proofmesh:8000/mcp/roles/verifier",
+        "urlMatches": true,
+        "transport": "http",
+        "authorizationProjected": true
+      }
+    },
+    {
+      "name": "case-memory-curator",
+      "phase": "Running",
+      "runtime": "qwenpaw",
+      "image": "proofmesh/agentteams-qwenpaw-worker:v1.2.0-beta.1-compat2",
+      "containerState": "running",
+      "skill": "curate-refund-memory",
+      "assetsPresent": true,
+      "teamHarness": {
+        "health": {"ok": true, "plugin": "teamharness", "adapter": "qwenpaw"},
+        "probeSurface": "qwenpaw-http-plugin-endpoint"
+      },
+      "mcpProjection": {
+        "roleEndpoint": "http://proofmesh:8000/mcp/roles/memory",
+        "urlMatches": true,
+        "transport": "http",
+        "authorizationProjected": true
+      }
+    }
+  ],
+  "team": {
+    "name": "proofmesh-refund-team",
+    "manifestValidated": true,
+    "submissionAttempted": true,
+    "resourceCreated": true,
+    "phase": "Active",
+    "uid": "f93ad59d-f872-49ec-8557-95f6e60848e3",
+    "leaderReady": true,
+    "readyWorkers": 6,
+    "totalWorkers": 6,
+    "roomIdSha256": "b0635f7919de96342a7a6525deb8744eb1c6c2e7387c5bc3f066c74c452a5ac1",
+    "workerMembers": [
+      {"name": "case-orchestrator", "role": "team_leader"},
+      {"name": "ticket-intake", "role": "worker"},
+      {"name": "context-investigator", "role": "worker"},
+      {"name": "risk-policy-sentinel", "role": "worker"},
+      {"name": "action-executor", "role": "worker"},
+      {"name": "outcome-verifier", "role": "worker"},
+      {"name": "case-memory-curator", "role": "worker"}
+    ]
+  }
+}

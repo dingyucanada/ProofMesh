@@ -1,0 +1,25 @@
+{
+  "dataset": "Banking77",
+  "intent_count": 77,
+  "license": "CC BY 4.0",
+  "license_file": {
+    "relative_path": "LICENSE",
+    "sha256": "7e7170e3cebf88a9f60c7b8421418323c09304da1af4d5e90f4da1dc1c8a2661"
+  },
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "paper": "https://arxiv.org/abs/2003.04807",
+  "raw_text_redistributed": false,
+  "schema_version": "proofmesh.public-dataset-source-lock/v1",
+  "source_commit": "57ec275d8078af65b7731c2a98be812d844a6d6b",
+  "source_repository": "https://github.com/PolyAI-LDN/task-specific-datasets",
+  "test": {
+    "relative_path": "banking_data/test.csv",
+    "rows": 3080,
+    "sha256": "d12d6e3bc4c3103966ae786dc435913c0c563dfa328f5a3646d0e62cfeeb474d"
+  },
+  "train": {
+    "relative_path": "banking_data/train.csv",
+    "rows": 10003,
+    "sha256": "b06e26ac675513959a63135f11b94ea7786ed02da65db93a5650d8838cbc664b"
+  }
+}

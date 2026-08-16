@@ -1,0 +1,68 @@
+{
+  "schema_version": "proofmesh.trust-bundle/v1",
+  "keys": {
+    "proofmesh-policy-local-v1": {
+      "algorithm": "ed25519",
+      "public_key": "F6kte99XyAdCJok4DvEgz0h+CeqxnB1aus2pHYdjRY8=",
+      "issuers": [
+        "proofmesh-policy-control-plane"
+      ],
+      "token_types": [
+        "proofmesh-action-passport+jws"
+      ]
+    },
+    "proofmesh-gateway-local-v1": {
+      "algorithm": "ed25519",
+      "public_key": "v6Q8VZ2e7N/0tA1i94QVQowsjGhp4ChqijIkjtI4HbQ=",
+      "issuers": [
+        "proofmesh-action-gateway"
+      ],
+      "token_types": [
+        "proofmesh-execution-receipt+jws"
+      ]
+    },
+    "proofmesh-workflow-task-local-v1": {
+      "algorithm": "ed25519",
+      "public_key": "SUPTe4t0w+Lv6CDr3z+Rjfb4B4WYklQIlZAdVAC5/k0=",
+      "issuers": [
+        "proofmesh-workflow-control-plane"
+      ],
+      "token_types": [
+        "proofmesh-task-step+jws"
+      ]
+    },
+    "proofmesh-proof-seal-local-v1": {
+      "algorithm": "ed25519",
+      "public_key": "aid1O2aTMID+Yca8LPdwL+1J3X9+ED7zW10/tuxYyfI=",
+      "issuers": [
+        "proofmesh-proof-sealer"
+      ],
+      "token_types": [
+        "proofmesh-workflow-proof+jws"
+      ]
+    },
+    "proofmesh-commerce-snapshot-local-v1": {
+      "algorithm": "ed25519",
+      "public_key": "+hcx0CwBQcQv4EIKRBUMv00Tqym42ktQUBMQbhH+toQ=",
+      "issuers": [
+        "proofmesh-commerce-sandbox"
+      ],
+      "token_types": [
+        "proofmesh-business-snapshot+jws"
+      ]
+    },
+    "proofmesh-reference-approval-service-v1": {
+      "algorithm": "ed25519",
+      "public_key": "lbyvEsHvQbBcpCojQoMn2aNAepsGEau7iEYML2hXC8o=",
+      "issuers": [
+        "proofmesh-reference-approval-service"
+      ],
+      "token_types": [
+        "proofmesh-human-approval+jws"
+      ]
+    }
+  },
+  "approval_issuers": [
+    "proofmesh-reference-approval-service"
+  ]
+}

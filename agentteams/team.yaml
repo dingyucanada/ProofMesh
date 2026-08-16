@@ -1,0 +1,27 @@
+apiVersion: agentteams.io/v1beta1
+kind: Team
+metadata:
+  name: proofmesh-refund-team
+  labels:
+    proofmesh.io/workload: refund
+spec:
+  description: "Seven-role, evidence-gated customer-refund saga with external human approval, compensation and independent verification."
+  admin:
+    name: proofmesh-approver
+  workerMembers:
+    - name: case-orchestrator
+      role: team_leader
+    - name: ticket-intake
+      role: worker
+    - name: context-investigator
+      role: worker
+    - name: risk-policy-sentinel
+      role: worker
+    - name: action-executor
+      role: worker
+    - name: outcome-verifier
+      role: worker
+    - name: case-memory-curator
+      role: worker
+  peerMentions: true
+  heartbeatEvery: 10m

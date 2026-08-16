@@ -1,0 +1,26 @@
+{
+  "schema_version": "proofmesh.refund-policy/v1",
+  "policy_id": "enterprise-customer-refund-cn",
+  "version": "1.0.0",
+  "description": "Execution-time policy for a customer-service refund saga. Amounts use integer minor currency units.",
+  "eligible_order_statuses": ["DELIVERED"],
+  "limits": {
+    "auto_approve_minor": 10000,
+    "max_workflow_refund_minor": 200000,
+    "human_review_risk_score": 0.15,
+    "block_risk_score": 0.55
+  },
+  "separation_of_duties": {
+    "requester_may_approve": false,
+    "approval_scope_must_match_plan": true,
+    "approval_must_bind_plan_digest": true
+  },
+  "runtime_invariants": [
+    "Every MCP tools/call carries a short-lived signed Action Passport.",
+    "The passport binds tenant, agent, workflow, tool, resource, exact arguments, budget, policy and approval.",
+    "A new idempotency key cannot reuse an exhausted passport.",
+    "Refund balance changes and refund records commit atomically.",
+    "A failed downstream step triggers a separately authorized compensation action.",
+    "Completion requires an independent read-back of refund, ticket and order state."
+  ]
+}

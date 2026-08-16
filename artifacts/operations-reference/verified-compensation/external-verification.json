@@ -1,0 +1,17 @@
+{
+  "valid": true,
+  "workflow_id": "ops-62875d07289f466daa11d7e7c406d38d",
+  "terminal_status": "COMPENSATED",
+  "checks": {
+    "schema_and_claim_boundary": true,
+    "bundle_signature": true,
+    "pinned_policy": true,
+    "plan_binding": true,
+    "gateway_receipts": true,
+    "tool_execution_semantics": true,
+    "event_chain": true,
+    "business_snapshot_attestation": true,
+    "terminal_business_state": true
+  },
+  "errors": []
+}

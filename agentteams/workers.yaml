@@ -1,0 +1,181 @@
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: case-orchestrator
+  labels:
+    proofmesh.io/workload: refund
+    proofmesh.io/stage: create
+spec:
+  model: qwen3.5-plus
+  runtime: qwenpaw
+  image: proofmesh/agentteams-qwenpaw-worker:v1.2.0-beta.1-compat2
+  mcpServers:
+    - name: proofmesh
+      url: http://proofmesh:8000/mcp/roles/orchestrator
+      transport: http
+  resources:
+    requests: {cpu: 300m, memory: 512Mi}
+    limits: {cpu: "1", memory: 1Gi}
+  state: Running
+  deployMode: Local
+  serviceEnabled: false
+  backendRuntime: pod
+  labels:
+    proofmesh.io/role: orchestrator
+    proofmesh.io/workload: refund
+---
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: ticket-intake
+  labels:
+    proofmesh.io/workload: refund
+    proofmesh.io/stage: normalize
+spec:
+  model: qwen3.5-plus
+  runtime: qwenpaw
+  image: proofmesh/agentteams-qwenpaw-worker:v1.2.0-beta.1-compat2
+  mcpServers:
+    - name: proofmesh
+      url: http://proofmesh:8000/mcp/roles/intake
+      transport: http
+  resources:
+    requests: {cpu: 200m, memory: 384Mi}
+    limits: {cpu: "1", memory: 768Mi}
+  state: Running
+  deployMode: Local
+  serviceEnabled: false
+  backendRuntime: pod
+  labels:
+    proofmesh.io/role: intake
+    proofmesh.io/workload: refund
+---
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: context-investigator
+  labels:
+    proofmesh.io/workload: refund
+    proofmesh.io/stage: context
+spec:
+  model: qwen3.5-plus
+  runtime: qwenpaw
+  image: proofmesh/agentteams-qwenpaw-worker:v1.2.0-beta.1-compat2
+  mcpServers:
+    - name: proofmesh
+      url: http://proofmesh:8000/mcp/roles/investigator
+      transport: http
+  resources:
+    requests: {cpu: 300m, memory: 512Mi}
+    limits: {cpu: "1", memory: 1Gi}
+  state: Running
+  deployMode: Local
+  serviceEnabled: false
+  backendRuntime: pod
+  labels:
+    proofmesh.io/role: investigator
+    proofmesh.io/workload: refund
+---
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: risk-policy-sentinel
+  labels:
+    proofmesh.io/workload: refund
+    proofmesh.io/stage: policy
+spec:
+  model: qwen3.5-plus
+  runtime: qwenpaw
+  image: proofmesh/agentteams-qwenpaw-worker:v1.2.0-beta.1-compat2
+  mcpServers:
+    - name: proofmesh
+      url: http://proofmesh:8000/mcp/roles/policy
+      transport: http
+  resources:
+    requests: {cpu: 300m, memory: 512Mi}
+    limits: {cpu: "1", memory: 1Gi}
+  state: Running
+  deployMode: Local
+  serviceEnabled: false
+  backendRuntime: pod
+  labels:
+    proofmesh.io/role: policy
+    proofmesh.io/workload: refund
+---
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: action-executor
+  labels:
+    proofmesh.io/workload: refund
+    proofmesh.io/stage: execute
+spec:
+  model: qwen3.5-plus
+  runtime: qwenpaw
+  image: proofmesh/agentteams-qwenpaw-worker:v1.2.0-beta.1-compat2
+  mcpServers:
+    - name: proofmesh
+      url: http://proofmesh:8000/mcp/roles/executor
+      transport: http
+  resources:
+    requests: {cpu: 400m, memory: 512Mi}
+    limits: {cpu: "2", memory: 1Gi}
+  state: Running
+  deployMode: Local
+  serviceEnabled: false
+  backendRuntime: pod
+  labels:
+    proofmesh.io/role: executor
+    proofmesh.io/workload: refund
+---
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: outcome-verifier
+  labels:
+    proofmesh.io/workload: refund
+    proofmesh.io/stage: verify
+spec:
+  model: qwen3.5-plus
+  runtime: qwenpaw
+  image: proofmesh/agentteams-qwenpaw-worker:v1.2.0-beta.1-compat2
+  mcpServers:
+    - name: proofmesh
+      url: http://proofmesh:8000/mcp/roles/verifier
+      transport: http
+  resources:
+    requests: {cpu: 300m, memory: 512Mi}
+    limits: {cpu: "1", memory: 1Gi}
+  state: Running
+  deployMode: Local
+  serviceEnabled: false
+  backendRuntime: pod
+  labels:
+    proofmesh.io/role: verifier
+    proofmesh.io/workload: refund
+---
+apiVersion: agentteams.io/v1beta1
+kind: Worker
+metadata:
+  name: case-memory-curator
+  labels:
+    proofmesh.io/workload: refund
+    proofmesh.io/stage: memory
+spec:
+  model: qwen3.5-plus
+  runtime: qwenpaw
+  image: proofmesh/agentteams-qwenpaw-worker:v1.2.0-beta.1-compat2
+  mcpServers:
+    - name: proofmesh
+      url: http://proofmesh:8000/mcp/roles/memory
+      transport: http
+  resources:
+    requests: {cpu: 200m, memory: 384Mi}
+    limits: {cpu: "1", memory: 768Mi}
+  state: Running
+  deployMode: Local
+  serviceEnabled: false
+  backendRuntime: pod
+  labels:
+    proofmesh.io/role: memory
+    proofmesh.io/workload: refund

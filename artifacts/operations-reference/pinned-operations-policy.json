@@ -1,0 +1,20 @@
+{
+  "schema_version": "proofmesh.operations-change-policy/v1",
+  "policy_id": "production-config-change-reference",
+  "version": "1.0.0",
+  "description": "Reference policy for risk-unit-bound production configuration changes.",
+  "limits": {
+    "auto_approve_risk_units": 40,
+    "max_workflow_risk_units": 100
+  },
+  "separation_of_duties": {
+    "requester_may_approve": false,
+    "approval_must_bind_exact_patch": true
+  },
+  "runtime_invariants": [
+    "Every tool call uses the shared Action Passport and Action Gateway path.",
+    "A production patch is bound to tenant, service, expected version, plan and risk units.",
+    "A failed post-change health gate restores the exact pre-change configuration.",
+    "An unreconcilable upstream commit enters UNKNOWN_MANUAL and stops automatic redispatch."
+  ]
+}

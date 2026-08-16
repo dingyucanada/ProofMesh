@@ -1,0 +1,308 @@
+{
+  "schema_version": "proofmesh.reference-waiting-evidence/v1",
+  "summary": {
+    "workflow_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+    "project_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+    "ticket_id": "TKT-HIGH-001",
+    "tenant_id": "acme-cn",
+    "requester": "reference-case-orchestrator",
+    "status": "WAITING_APPROVAL",
+    "revision": 3,
+    "created_at": "2026-08-13T12:31:56.801202Z",
+    "updated_at": "2026-08-13T12:31:56.822320Z",
+    "context_digest": "17de2f02ae13c4d2c15d430d774c78e316a49cd12d2ce98b0353dc1c63800db5",
+    "policy_digest": "2da5c61bbda9b8045cf2aeb84345509784167bd8fe006f037e94589a8c51cea2",
+    "plan_digest": "3024d47a20d0dd046328b999222e1ce9ea05552e0f6d21f7bc11270d5bb52726",
+    "approval_required": true,
+    "approval_scope": [
+      "payments.issue_refund",
+      "crm.close_ticket"
+    ],
+    "approval_digest": null,
+    "amount_minor": 12900,
+    "currency": "CNY",
+    "risk_score": 0.21,
+    "last_step": "evaluate_policy",
+    "next_step": "record_human_approval",
+    "final_message": "冻结计划已生成；项目必须暂停并等待职责分离的 Human 审批。",
+    "proof_bundle": null,
+    "gateway_receipt_count": 3,
+    "task_receipt_count": 4,
+    "agent_count": 4
+  },
+  "task_step_receipts": [
+    {
+      "actor": "reference-case-orchestrator",
+      "approval_assertion_digest": null,
+      "approval_digest": null,
+      "context_digest": "17de2f02ae13c4d2c15d430d774c78e316a49cd12d2ce98b0353dc1c63800db5",
+      "from_status": "RECEIVED",
+      "input_digest": "cd6a9a0b082f0d0acc0c2b90005960e9da4093860f049797c17268aa95915369",
+      "issuer": "proofmesh-workflow-control-plane",
+      "output_digest": "028b49d69c8438c6867414c44419ebc85aee997c7fd4bb2737298677f4ae0e49",
+      "plan_digest": null,
+      "policy_digest": "2da5c61bbda9b8045cf2aeb84345509784167bd8fe006f037e94589a8c51cea2",
+      "project_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+      "revision_from": -1,
+      "revision_to": 0,
+      "role": "orchestrator",
+      "schema_version": "proofmesh.task-step-receipt/v1",
+      "signature": "eyJhbGciOiJFZERTQSIsImtpZCI6InByb29mbWVzaC13b3JrZmxvdy10YXNrLWxvY2FsLXYxIiwidHlwIjoicHJvb2ZtZXNoLXRhc2stc3RlcCtqd3MifQ.eyJhY3RvciI6InJlZmVyZW5jZS1jYXNlLW9yY2hlc3RyYXRvciIsImFwcHJvdmFsX2Fzc2VydGlvbl9kaWdlc3QiOm51bGwsImFwcHJvdmFsX2RpZ2VzdCI6bnVsbCwiY29udGV4dF9kaWdlc3QiOiIxN2RlMmYwMmFlMTNjNGQyYzE1ZDQzMGQ3NzRjNzhlMzE2YTQ5Y2QxMmQyY2U5OGIwMzUzZGMxYzYzODAwZGI1IiwiZnJvbV9zdGF0dXMiOiJSRUNFSVZFRCIsImlucHV0X2RpZ2VzdCI6ImNkNmE5YTBiMDgyZjBkMGFjYzBjMmI5MDAwNTk2MGU5ZGE0MDkzODYwZjA0OTc5N2MxNzI2OGFhOTU5MTUzNjkiLCJpc3N1ZXIiOiJwcm9vZm1lc2gtd29ya2Zsb3ctY29udHJvbC1wbGFuZSIsIm91dHB1dF9kaWdlc3QiOiIwMjhiNDlkNjljODQzOGM2ODY3NDE0YzQ0NDE5ZWJjODVhZWU5OTdjN2ZkNGJiMjczNzI5ODY3N2Y0YWUwZTQ5IiwicGxhbl9kaWdlc3QiOm51bGwsInBvbGljeV9kaWdlc3QiOiIyZGE1YzYxYmJkYTliODA0NWNmMmFlYjg0MzQ1NTA5Nzg0MTY3YmQ4ZmUwMDZmMDM3ZTk0NTg5YThjNTFjZWEyIiwicHJvamVjdF9pZCI6IndmLWE0YzNjYjkwMmE4YjQ0NzdiYWY1ODE3YzJlZTEwZWI3IiwicmV2aXNpb25fZnJvbSI6LTEsInJldmlzaW9uX3RvIjowLCJyb2xlIjoib3JjaGVzdHJhdG9yIiwic2NoZW1hX3ZlcnNpb24iOiJwcm9vZm1lc2gudGFzay1zdGVwLXJlY2VpcHQvdjEiLCJzdGVwIjoiY3JlYXRlX2Nhc2UiLCJ0YXNrX2lkIjoicmVmZXJlbmNlOmh1bWFuLWFwcHJvdmFsOmNyZWF0ZSIsInRlbmFudF9pZCI6ImFjbWUtY24iLCJ0aW1lc3RhbXAiOiIyMDI2LTA4LTEzVDEyOjMxOjU2LjgwMTI4M1oiLCJ0b19zdGF0dXMiOiJSRUNFSVZFRCIsIndvcmtmbG93X2lkIjoid2YtYTRjM2NiOTAyYThiNDQ3N2JhZjU4MTdjMmVlMTBlYjcifQ.TiqtOI86krwNzkWwr48EtOE77CV-u88mSvcQ9AQA20aLgF3zIq7LGhbjIuHnJv_JJO4xhs5RbFvsESnvI4_zBg",
+      "step": "create_case",
+      "task_id": "reference:human-approval:create",
+      "tenant_id": "acme-cn",
+      "timestamp": "2026-08-13T12:31:56.801283Z",
+      "to_status": "RECEIVED",
+      "workflow_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7"
+    },
+    {
+      "actor": "reference-ticket-intake",
+      "approval_assertion_digest": null,
+      "approval_digest": null,
+      "context_digest": "17de2f02ae13c4d2c15d430d774c78e316a49cd12d2ce98b0353dc1c63800db5",
+      "from_status": "RECEIVED",
+      "input_digest": "1ba69503a6989f401f42d77975a6423edadb72fd727cfdbee175003a50cb0c26",
+      "issuer": "proofmesh-workflow-control-plane",
+      "output_digest": "c4dc5f3c2102ffc80e414589a3a1919864f2caf4601cc6e90cc2df096cb3293e",
+      "plan_digest": null,
+      "policy_digest": "2da5c61bbda9b8045cf2aeb84345509784167bd8fe006f037e94589a8c51cea2",
+      "project_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+      "revision_from": 0,
+      "revision_to": 1,
+      "role": "intake",
+      "schema_version": "proofmesh.task-step-receipt/v1",
+      "signature": "eyJhbGciOiJFZERTQSIsImtpZCI6InByb29mbWVzaC13b3JrZmxvdy10YXNrLWxvY2FsLXYxIiwidHlwIjoicHJvb2ZtZXNoLXRhc2stc3RlcCtqd3MifQ.eyJhY3RvciI6InJlZmVyZW5jZS10aWNrZXQtaW50YWtlIiwiYXBwcm92YWxfYXNzZXJ0aW9uX2RpZ2VzdCI6bnVsbCwiYXBwcm92YWxfZGlnZXN0IjpudWxsLCJjb250ZXh0X2RpZ2VzdCI6IjE3ZGUyZjAyYWUxM2M0ZDJjMTVkNDMwZDc3NGM3OGUzMTZhNDljZDEyZDJjZTk4YjAzNTNkYzFjNjM4MDBkYjUiLCJmcm9tX3N0YXR1cyI6IlJFQ0VJVkVEIiwiaW5wdXRfZGlnZXN0IjoiMWJhNjk1MDNhNjk4OWY0MDFmNDJkNzc5NzVhNjQyM2VkYWRiNzJmZDcyN2NmZGJlZTE3NTAwM2E1MGNiMGMyNiIsImlzc3VlciI6InByb29mbWVzaC13b3JrZmxvdy1jb250cm9sLXBsYW5lIiwib3V0cHV0X2RpZ2VzdCI6ImM0ZGM1ZjNjMjEwMmZmYzgwZTQxNDU4OWEzYTE5MTk4NjRmMmNhZjQ2MDFjYzZlOTBjYzJkZjA5NmNiMzI5M2UiLCJwbGFuX2RpZ2VzdCI6bnVsbCwicG9saWN5X2RpZ2VzdCI6IjJkYTVjNjFiYmRhOWI4MDQ1Y2YyYWViODQzNDU1MDk3ODQxNjdiZDhmZTAwNmYwMzdlOTQ1ODlhOGM1MWNlYTIiLCJwcm9qZWN0X2lkIjoid2YtYTRjM2NiOTAyYThiNDQ3N2JhZjU4MTdjMmVlMTBlYjciLCJyZXZpc2lvbl9mcm9tIjowLCJyZXZpc2lvbl90byI6MSwicm9sZSI6ImludGFrZSIsInNjaGVtYV92ZXJzaW9uIjoicHJvb2ZtZXNoLnRhc2stc3RlcC1yZWNlaXB0L3YxIiwic3RlcCI6Im5vcm1hbGl6ZV9jYXNlIiwidGFza19pZCI6InJlZmVyZW5jZTpodW1hbi1hcHByb3ZhbDpub3JtYWxpemUiLCJ0ZW5hbnRfaWQiOiJhY21lLWNuIiwidGltZXN0YW1wIjoiMjAyNi0wOC0xM1QxMjozMTo1Ni44MDYyOTlaIiwidG9fc3RhdHVzIjoiTk9STUFMSVpFRCIsIndvcmtmbG93X2lkIjoid2YtYTRjM2NiOTAyYThiNDQ3N2JhZjU4MTdjMmVlMTBlYjcifQ.M8YG995S1EJ0en4ulXW0kFBP567lnCyMfY6EJx8EOTQLgQpyJi4uzAZqbO33X7JB4XZBwxuCv_Ctb-_ylKFeAQ",
+      "step": "normalize_case",
+      "task_id": "reference:human-approval:normalize",
+      "tenant_id": "acme-cn",
+      "timestamp": "2026-08-13T12:31:56.806299Z",
+      "to_status": "NORMALIZED",
+      "workflow_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7"
+    },
+    {
+      "actor": "reference-context-investigator",
+      "approval_assertion_digest": null,
+      "approval_digest": null,
+      "context_digest": "17de2f02ae13c4d2c15d430d774c78e316a49cd12d2ce98b0353dc1c63800db5",
+      "from_status": "NORMALIZED",
+      "input_digest": "c4dc5f3c2102ffc80e414589a3a1919864f2caf4601cc6e90cc2df096cb3293e",
+      "issuer": "proofmesh-workflow-control-plane",
+      "output_digest": "71c1c43730f3d0f34bb9d72d7bc2076d8d12b30cb104fc1d5250db250565c1fe",
+      "plan_digest": null,
+      "policy_digest": "2da5c61bbda9b8045cf2aeb84345509784167bd8fe006f037e94589a8c51cea2",
+      "project_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+      "revision_from": 1,
+      "revision_to": 2,
+      "role": "investigator",
+      "schema_version": "proofmesh.task-step-receipt/v1",
+      "signature": "eyJhbGciOiJFZERTQSIsImtpZCI6InByb29mbWVzaC13b3JrZmxvdy10YXNrLWxvY2FsLXYxIiwidHlwIjoicHJvb2ZtZXNoLXRhc2stc3RlcCtqd3MifQ.eyJhY3RvciI6InJlZmVyZW5jZS1jb250ZXh0LWludmVzdGlnYXRvciIsImFwcHJvdmFsX2Fzc2VydGlvbl9kaWdlc3QiOm51bGwsImFwcHJvdmFsX2RpZ2VzdCI6bnVsbCwiY29udGV4dF9kaWdlc3QiOiIxN2RlMmYwMmFlMTNjNGQyYzE1ZDQzMGQ3NzRjNzhlMzE2YTQ5Y2QxMmQyY2U5OGIwMzUzZGMxYzYzODAwZGI1IiwiZnJvbV9zdGF0dXMiOiJOT1JNQUxJWkVEIiwiaW5wdXRfZGlnZXN0IjoiYzRkYzVmM2MyMTAyZmZjODBlNDE0NTg5YTNhMTkxOTg2NGYyY2FmNDYwMWNjNmU5MGNjMmRmMDk2Y2IzMjkzZSIsImlzc3VlciI6InByb29mbWVzaC13b3JrZmxvdy1jb250cm9sLXBsYW5lIiwib3V0cHV0X2RpZ2VzdCI6IjcxYzFjNDM3MzBmM2QwZjM0YmI5ZDcyZDdiYzIwNzZkOGQxMmIzMGNiMTA0ZmMxZDUyNTBkYjI1MDU2NWMxZmUiLCJwbGFuX2RpZ2VzdCI6bnVsbCwicG9saWN5X2RpZ2VzdCI6IjJkYTVjNjFiYmRhOWI4MDQ1Y2YyYWViODQzNDU1MDk3ODQxNjdiZDhmZTAwNmYwMzdlOTQ1ODlhOGM1MWNlYTIiLCJwcm9qZWN0X2lkIjoid2YtYTRjM2NiOTAyYThiNDQ3N2JhZjU4MTdjMmVlMTBlYjciLCJyZXZpc2lvbl9mcm9tIjoxLCJyZXZpc2lvbl90byI6Miwicm9sZSI6ImludmVzdGlnYXRvciIsInNjaGVtYV92ZXJzaW9uIjoicHJvb2ZtZXNoLnRhc2stc3RlcC1yZWNlaXB0L3YxIiwic3RlcCI6ImdhdGhlcl9jb250ZXh0IiwidGFza19pZCI6InJlZmVyZW5jZTpodW1hbi1hcHByb3ZhbDpjb250ZXh0IiwidGVuYW50X2lkIjoiYWNtZS1jbiIsInRpbWVzdGFtcCI6IjIwMjYtMDgtMTNUMTI6MzE6NTYuODE2MzY0WiIsInRvX3N0YXR1cyI6IkNPTlRFWFRfUkVBRFkiLCJ3b3JrZmxvd19pZCI6IndmLWE0YzNjYjkwMmE4YjQ0NzdiYWY1ODE3YzJlZTEwZWI3In0.6UKCn-oJ-UxuZFoLgwiebXWcS2Rffm963iNKTEfN-rlHTvQ9tpeHbe1my6nV2nSS1TcoYcjMisF6-g6LcbW5Dg",
+      "step": "gather_context",
+      "task_id": "reference:human-approval:context",
+      "tenant_id": "acme-cn",
+      "timestamp": "2026-08-13T12:31:56.816364Z",
+      "to_status": "CONTEXT_READY",
+      "workflow_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7"
+    },
+    {
+      "actor": "reference-risk-policy",
+      "approval_assertion_digest": null,
+      "approval_digest": null,
+      "context_digest": "17de2f02ae13c4d2c15d430d774c78e316a49cd12d2ce98b0353dc1c63800db5",
+      "from_status": "CONTEXT_READY",
+      "input_digest": "d90bb692a42c0bff95aba9026e6814e4b34ec6471aa527497adb9c8cbffada0c",
+      "issuer": "proofmesh-workflow-control-plane",
+      "output_digest": "5f89e16a6ff09418b4ee5a3e6693e21076932173764a94ca46f3bc8eef1e3a1e",
+      "plan_digest": "3024d47a20d0dd046328b999222e1ce9ea05552e0f6d21f7bc11270d5bb52726",
+      "policy_digest": "2da5c61bbda9b8045cf2aeb84345509784167bd8fe006f037e94589a8c51cea2",
+      "project_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+      "revision_from": 2,
+      "revision_to": 3,
+      "role": "policy",
+      "schema_version": "proofmesh.task-step-receipt/v1",
+      "signature": "eyJhbGciOiJFZERTQSIsImtpZCI6InByb29mbWVzaC13b3JrZmxvdy10YXNrLWxvY2FsLXYxIiwidHlwIjoicHJvb2ZtZXNoLXRhc2stc3RlcCtqd3MifQ.eyJhY3RvciI6InJlZmVyZW5jZS1yaXNrLXBvbGljeSIsImFwcHJvdmFsX2Fzc2VydGlvbl9kaWdlc3QiOm51bGwsImFwcHJvdmFsX2RpZ2VzdCI6bnVsbCwiY29udGV4dF9kaWdlc3QiOiIxN2RlMmYwMmFlMTNjNGQyYzE1ZDQzMGQ3NzRjNzhlMzE2YTQ5Y2QxMmQyY2U5OGIwMzUzZGMxYzYzODAwZGI1IiwiZnJvbV9zdGF0dXMiOiJDT05URVhUX1JFQURZIiwiaW5wdXRfZGlnZXN0IjoiZDkwYmI2OTJhNDJjMGJmZjk1YWJhOTAyNmU2ODE0ZTRiMzRlYzY0NzFhYTUyNzQ5N2FkYjljOGNiZmZhZGEwYyIsImlzc3VlciI6InByb29mbWVzaC13b3JrZmxvdy1jb250cm9sLXBsYW5lIiwib3V0cHV0X2RpZ2VzdCI6IjVmODllMTZhNmZmMDk0MThiNGVlNWEzZTY2OTNlMjEwNzY5MzIxNzM3NjRhOTRjYTQ2ZjNiYzhlZWYxZTNhMWUiLCJwbGFuX2RpZ2VzdCI6IjMwMjRkNDdhMjBkMGRkMDQ2MzI4Yjk5OTIyMmUxY2U5ZWEwNTU1MmUwZjZkMjFmN2JjMTEyNzBkNWJiNTI3MjYiLCJwb2xpY3lfZGlnZXN0IjoiMmRhNWM2MWJiZGE5YjgwNDVjZjJhZWI4NDM0NTUwOTc4NDE2N2JkOGZlMDA2ZjAzN2U5NDU4OWE4YzUxY2VhMiIsInByb2plY3RfaWQiOiJ3Zi1hNGMzY2I5MDJhOGI0NDc3YmFmNTgxN2MyZWUxMGViNyIsInJldmlzaW9uX2Zyb20iOjIsInJldmlzaW9uX3RvIjozLCJyb2xlIjoicG9saWN5Iiwic2NoZW1hX3ZlcnNpb24iOiJwcm9vZm1lc2gudGFzay1zdGVwLXJlY2VpcHQvdjEiLCJzdGVwIjoiZXZhbHVhdGVfcG9saWN5IiwidGFza19pZCI6InJlZmVyZW5jZTpodW1hbi1hcHByb3ZhbDpwb2xpY3kiLCJ0ZW5hbnRfaWQiOiJhY21lLWNuIiwidGltZXN0YW1wIjoiMjAyNi0wOC0xM1QxMjozMTo1Ni44MjIxODBaIiwidG9fc3RhdHVzIjoiV0FJVElOR19BUFBST1ZBTCIsIndvcmtmbG93X2lkIjoid2YtYTRjM2NiOTAyYThiNDQ3N2JhZjU4MTdjMmVlMTBlYjcifQ.oZULMaqA6fIkZPlVotSEQAs8L52lWpib27OMDFa88te2C1sj4MJHpvTa2sjJHaZrX7f-7PPRwIYL26dgI_AbCw",
+      "step": "evaluate_policy",
+      "task_id": "reference:human-approval:policy",
+      "tenant_id": "acme-cn",
+      "timestamp": "2026-08-13T12:31:56.822180Z",
+      "to_status": "WAITING_APPROVAL",
+      "workflow_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7"
+    }
+  ],
+  "workflow_events": [
+    {
+      "seq": 1,
+      "event_id": "evt-0c03dfa873c4412696be7707cd6a7e6f",
+      "run_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+      "ts": "2026-08-13T12:31:56.805155Z",
+      "agent": "reference-case-orchestrator",
+      "event_type": "workflow.received",
+      "payload": {
+        "authenticated_actor": "reference-case-orchestrator",
+        "authenticated_role": "orchestrator",
+        "context_digest": "17de2f02ae13c4d2c15d430d774c78e316a49cd12d2ce98b0353dc1c63800db5",
+        "otel": {
+          "gen_ai.agent.name": "reference-case-orchestrator",
+          "gen_ai.operation.name": "workflow.received"
+        },
+        "project_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+        "step_receipt_digest": "ed212b19cd44ae1681350ec392d3428fd6818fa688039231aceeb1d269835b37",
+        "task_id": "reference:human-approval:create",
+        "tenant_id": "acme-cn",
+        "ticket_id": "TKT-HIGH-001"
+      },
+      "prev_hash": "GENESIS",
+      "event_hash": "22a5bf22ed697cbacdca812c68d472dcc35463396cc8426bbe5ad41c368f4d25"
+    },
+    {
+      "seq": 2,
+      "event_id": "evt-8721017e1fbe4a68a476b196a2571e9e",
+      "run_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+      "ts": "2026-08-13T12:31:56.807156Z",
+      "agent": "reference-ticket-intake",
+      "event_type": "ticket.normalized",
+      "payload": {
+        "authenticated_actor": "reference-ticket-intake",
+        "authenticated_role": "intake",
+        "dedupe_key": "cd6a9a0b082f0d0acc0c2b90005960e9da4093860f049797c17268aa95915369",
+        "otel": {
+          "gen_ai.agent.name": "reference-ticket-intake",
+          "gen_ai.operation.name": "ticket.normalized"
+        },
+        "project_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+        "revision": 1,
+        "schema": "proofmesh.refund-case/v1",
+        "step_receipt_digest": "bddc5a15eb281ec803ce228e3f62d2d8a2c191dc30c43d8feac5d08f9d92bd18",
+        "task_id": "reference:human-approval:normalize"
+      },
+      "prev_hash": "22a5bf22ed697cbacdca812c68d472dcc35463396cc8426bbe5ad41c368f4d25",
+      "event_hash": "c0823aee00ef12238e19e12ba01fa84b39d8fe57592bb6af607321a9c071185b"
+    },
+    {
+      "seq": 3,
+      "event_id": null,
+      "run_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+      "ts": "2026-08-13T12:31:56.811750Z",
+      "agent": "reference-context-investigator",
+      "event_type": "tool.call.completed",
+      "payload": {
+        "authenticated_actor": "reference-context-investigator",
+        "authenticated_role": "investigator",
+        "call_id": "call-c3eee59097084ed7a275703e18140e05",
+        "idempotent_replay": false,
+        "otel": {
+          "gen_ai.agent.name": "reference-context-investigator",
+          "gen_ai.operation.name": "tool.call.completed"
+        },
+        "receipt_digest": "ae89b9989bf447250825e97ed130a7bd4a2f764416c44c55f9a3a932ac30a6a2",
+        "tool": "crm.get_ticket"
+      },
+      "prev_hash": "c0823aee00ef12238e19e12ba01fa84b39d8fe57592bb6af607321a9c071185b",
+      "event_hash": "2c859932bee6043e98df5988dd3114ca6cfa528d50151932ab12c14df7b2f8fe"
+    },
+    {
+      "seq": 4,
+      "event_id": null,
+      "run_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+      "ts": "2026-08-13T12:31:56.815944Z",
+      "agent": "reference-context-investigator",
+      "event_type": "tool.call.completed",
+      "payload": {
+        "authenticated_actor": "reference-context-investigator",
+        "authenticated_role": "investigator",
+        "call_id": "call-99773e048fd84937a9cf3f463c03fd97",
+        "idempotent_replay": false,
+        "otel": {
+          "gen_ai.agent.name": "reference-context-investigator",
+          "gen_ai.operation.name": "tool.call.completed"
+        },
+        "receipt_digest": "11d9b3bd94dd2361688e6a0330612725941a8f16fafafc70b79d79da51ded942",
+        "tool": "orders.get_refund_context"
+      },
+      "prev_hash": "2c859932bee6043e98df5988dd3114ca6cfa528d50151932ab12c14df7b2f8fe",
+      "event_hash": "c0c5ee8d35ad9442935e6d4c06980dde46583f860bbd40f5e5c1d68403b36572"
+    },
+    {
+      "seq": 5,
+      "event_id": "evt-8b4e14e4ae55495b84840771b417dfb7",
+      "run_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+      "ts": "2026-08-13T12:31:56.817255Z",
+      "agent": "reference-context-investigator",
+      "event_type": "context.gathered",
+      "payload": {
+        "authenticated_actor": "reference-context-investigator",
+        "authenticated_role": "investigator",
+        "context_facts_digest": "71c1c43730f3d0f34bb9d72d7bc2076d8d12b30cb104fc1d5250db250565c1fe",
+        "order_version": 0,
+        "otel": {
+          "gen_ai.agent.name": "reference-context-investigator",
+          "gen_ai.operation.name": "context.gathered"
+        },
+        "project_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+        "revision": 2,
+        "step_receipt_digest": "cd684a7ef6e158e63d068f058b72ad13eb03c8029dee5b65022696e043c65702",
+        "task_id": "reference:human-approval:context"
+      },
+      "prev_hash": "c0c5ee8d35ad9442935e6d4c06980dde46583f860bbd40f5e5c1d68403b36572",
+      "event_hash": "5314d27c2c06e16018f71625f267ba9523ce208a898165db5e0318e08fe62f2b"
+    },
+    {
+      "seq": 6,
+      "event_id": null,
+      "run_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+      "ts": "2026-08-13T12:31:56.821666Z",
+      "agent": "reference-risk-policy",
+      "event_type": "tool.call.completed",
+      "payload": {
+        "authenticated_actor": "reference-risk-policy",
+        "authenticated_role": "policy",
+        "call_id": "call-3a50b752ece04d7c9fa11dfec2adf8cc",
+        "idempotent_replay": false,
+        "otel": {
+          "gen_ai.agent.name": "reference-risk-policy",
+          "gen_ai.operation.name": "tool.call.completed"
+        },
+        "receipt_digest": "d570eedf8389c2348f7d007a1939544770cdd3daa3941a31811e619849f41fff",
+        "tool": "risk.score_refund"
+      },
+      "prev_hash": "5314d27c2c06e16018f71625f267ba9523ce208a898165db5e0318e08fe62f2b",
+      "event_hash": "43ad39f9b8939632f583ef7f44b326e1eee5d60b9f624141dd55996fb5a6dcf0"
+    },
+    {
+      "seq": 7,
+      "event_id": "evt-ceeee530862b426dbf247951c851471a",
+      "run_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+      "ts": "2026-08-13T12:31:56.823181Z",
+      "agent": "reference-risk-policy",
+      "event_type": "policy.evaluated",
+      "payload": {
+        "approval_required": true,
+        "authenticated_actor": "reference-risk-policy",
+        "authenticated_role": "policy",
+        "decision": "REQUIRE_APPROVAL",
+        "otel": {
+          "gen_ai.agent.name": "reference-risk-policy",
+          "gen_ai.operation.name": "policy.evaluated"
+        },
+        "plan_digest": "3024d47a20d0dd046328b999222e1ce9ea05552e0f6d21f7bc11270d5bb52726",
+        "policy_digest": "2da5c61bbda9b8045cf2aeb84345509784167bd8fe006f037e94589a8c51cea2",
+        "project_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+        "revision": 3,
+        "risk_score": 0.21,
+        "step_receipt_digest": "b45af312cdd84209dc8f4af4bc2e3ea2851f76921f6a057e5a8a46aa411f0426",
+        "task_id": "reference:human-approval:policy"
+      },
+      "prev_hash": "43ad39f9b8939632f583ef7f44b326e1eee5d60b9f624141dd55996fb5a6dcf0",
+      "event_hash": "0bd2eeb4c0edb49440f6c1998407144a76bcf17017387861096dfb2a42a839a5"
+    }
+  ],
+  "business_snapshot": {
+    "workflow_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+    "refund": null
+  },
+  "assertions": {
+    "status_is_waiting_approval": true,
+    "refund_not_executed": true,
+    "frozen_plan_digest_present": true,
+    "approval_scope_present": true
+  }
+}

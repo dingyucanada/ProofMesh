@@ -1,0 +1,131 @@
+--- a/hiclaw-controller/internal/server/types.go
++++ b/hiclaw-controller/internal/server/types.go
+@@ -93,7 +93,8 @@
+ 	Description   string                     `json:"description,omitempty"`
+ 	Admin         *v1beta1.TeamAdminSpec     `json:"admin,omitempty"`
+ 	HumanMembers  []v1beta1.TeamMemberSpec   `json:"humanMembers,omitempty"`
+-	Leader        TeamLeaderRequest          `json:"leader"`
++	WorkerMembers []v1beta1.TeamWorkerRef    `json:"workerMembers,omitempty"`
++	Leader        TeamLeaderRequest          `json:"leader,omitempty"`
+ 	Workers       []TeamWorkerRequest        `json:"workers,omitempty"`
+ 	PeerMentions  *bool                      `json:"peerMentions,omitempty"`
+ 	ChannelPolicy *v1beta1.ChannelPolicySpec `json:"channelPolicy,omitempty"`
+--- a/hiclaw-controller/internal/server/resource_handler.go
++++ b/hiclaw-controller/internal/server/resource_handler.go
+@@ -401,7 +401,7 @@
+ 		httputil.WriteError(w, http.StatusBadRequest, "name is required")
+ 		return
+ 	}
+-	if req.Leader.Name == "" {
++	if len(req.WorkerMembers) == 0 && req.Leader.Name == "" {
+ 		httputil.WriteError(w, http.StatusBadRequest, "leader.name is required")
+ 		return
+ 	}
+@@ -416,6 +416,7 @@
+ 			TeamName:      req.TeamName,
+ 			Admin:         req.Admin,
+ 			HumanMembers:  req.HumanMembers,
++			WorkerMembers: req.WorkerMembers,
+ 			PeerMentions:  req.PeerMentions,
+ 			ChannelPolicy: req.ChannelPolicy,
+ 			Leader: v1beta1.LeaderSpec{
+--- a/hiclaw-controller/internal/server/resource_handler_test.go
++++ b/hiclaw-controller/internal/server/resource_handler_test.go
+@@ -133,6 +133,97 @@
+ 	assertAgentResources(t, team.Spec.Workers[0].Resources, "200m", "512Mi", "1", "2Gi")
+ }
+ 
++func TestCreateTeamWithWorkerMembersUsesDecoupledPath(t *testing.T) {
++	scheme := newServerTestScheme(t)
++	k8sClient := fake.NewClientBuilder().WithScheme(scheme).Build()
++	handler := NewResourceHandler(k8sClient, "default", nil, "")
++
++	body := []byte(`{
++		"name":"decoupled-team",
++		"workerMembers":[
++			{"name":"existing-leader","role":"team_leader"},
++			{"name":"existing-worker","role":"worker"}
++		]
++	}`)
++	req := httptest.NewRequest(http.MethodPost, "/api/v1/teams", bytes.NewReader(body))
++	rec := httptest.NewRecorder()
++	handler.CreateTeam(rec, req)
++
++	if rec.Code != http.StatusCreated {
++		t.Fatalf("expected status %d, got %d: %s", http.StatusCreated, rec.Code, rec.Body.String())
++	}
++	var stored v1beta1.Team
++	if err := k8sClient.Get(context.Background(), client.ObjectKey{Name: "decoupled-team", Namespace: "default"}, &stored); err != nil {
++		t.Fatalf("get team: %v", err)
++	}
++	if len(stored.Spec.WorkerMembers) != 2 {
++		t.Fatalf("workerMembers len=%d, want 2", len(stored.Spec.WorkerMembers))
++	}
++	if stored.Spec.WorkerMembers[0].Name != "existing-leader" || stored.Spec.WorkerMembers[0].Role != "team_leader" {
++		t.Fatalf("unexpected leader ref: %+v", stored.Spec.WorkerMembers[0])
++	}
++	if stored.Spec.WorkerMembers[1].Name != "existing-worker" || stored.Spec.WorkerMembers[1].Role != "worker" {
++		t.Fatalf("unexpected worker ref: %+v", stored.Spec.WorkerMembers[1])
++	}
++	if stored.Spec.Leader.Name != "" || len(stored.Spec.Workers) != 0 {
++		t.Fatalf("decoupled create populated deprecated inline members: leader=%q workers=%+v", stored.Spec.Leader.Name, stored.Spec.Workers)
++	}
++}
++
++func TestCreateTeamWithoutWorkerMembersStillRequiresLegacyLeader(t *testing.T) {
++	scheme := newServerTestScheme(t)
++	k8sClient := fake.NewClientBuilder().WithScheme(scheme).Build()
++	handler := NewResourceHandler(k8sClient, "default", nil, "")
++
++	body := []byte(`{"name":"invalid-team"}`)
++	req := httptest.NewRequest(http.MethodPost, "/api/v1/teams", bytes.NewReader(body))
++	rec := httptest.NewRecorder()
++	handler.CreateTeam(rec, req)
++
++	if rec.Code != http.StatusBadRequest {
++		t.Fatalf("expected status %d, got %d: %s", http.StatusBadRequest, rec.Code, rec.Body.String())
++	}
++	if !bytes.Contains(rec.Body.Bytes(), []byte("leader.name is required")) {
++		t.Fatalf("expected legacy leader validation error, got: %s", rec.Body.String())
++	}
++}
++
++func TestCreateTeamWithWorkerMembersTakesPrecedenceOverLegacyFields(t *testing.T) {
++	scheme := newServerTestScheme(t)
++	k8sClient := fake.NewClientBuilder().WithScheme(scheme).Build()
++	handler := NewResourceHandler(k8sClient, "default", nil, "")
++
++	body := []byte(`{
++		"name":"migration-team",
++		"workerMembers":[
++			{"name":"existing-leader","role":"team_leader"},
++			{"name":"existing-worker","role":"worker"}
++		],
++		"leader":{"name":"deprecated-leader"},
++		"workers":[{"name":"deprecated-worker"}]
++	}`)
++	req := httptest.NewRequest(http.MethodPost, "/api/v1/teams", bytes.NewReader(body))
++	rec := httptest.NewRecorder()
++	handler.CreateTeam(rec, req)
++
++	if rec.Code != http.StatusCreated {
++		t.Fatalf("expected status %d, got %d: %s", http.StatusCreated, rec.Code, rec.Body.String())
++	}
++	var stored v1beta1.Team
++	if err := k8sClient.Get(context.Background(), client.ObjectKey{Name: "migration-team", Namespace: "default"}, &stored); err != nil {
++		t.Fatalf("get team: %v", err)
++	}
++	if len(stored.Spec.WorkerMembers) != 2 {
++		t.Fatalf("workerMembers len=%d, want 2", len(stored.Spec.WorkerMembers))
++	}
++	// The CRD/controller contract deliberately ignores deprecated inline fields
++	// whenever WorkerMembers is non-empty. Preserve them during REST transport so
++	// the existing migration semantics remain exactly where they are enforced.
++	if stored.Spec.Leader.Name != "deprecated-leader" || len(stored.Spec.Workers) != 1 {
++		t.Fatalf("legacy transport fields changed: leader=%q workers=%+v", stored.Spec.Leader.Name, stored.Spec.Workers)
++	}
++}
++
+ func TestCreateManagerPreservesResources(t *testing.T) {
+ 	scheme := newServerTestScheme(t)
+ 	k8sClient := fake.NewClientBuilder().WithScheme(scheme).Build()

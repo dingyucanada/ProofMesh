@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>ProofMesh · Agent Action Control Plane</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="ProofMesh 首页">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span><strong>ProofMesh</strong><small>Agent Action Control Plane</small></span>
+    </a>
+    <div class="service-state">
+      <span id="healthDot" class="dot pending"></span>
+      <span id="healthText">正在检查控制面</span>
+      <span class="version">v1.0</span>
+    </div>
+  </header>
+
+  <main>
+    <aside class="rail">
+      <section class="rail-section">
+        <p class="section-kicker">01 / CASE INTAKE</p>
+        <h2>选择业务用例</h2>
+        <div id="caseList" class="case-list" role="radiogroup" aria-label="业务用例"></div>
+        <label class="field-label" for="tenantId">租户边界</label>
+        <input id="tenantId" value="acme-cn" autocomplete="off">
+      </section>
+
+      <section class="rail-section identity-section">
+        <div class="section-title-row">
+          <div>
+            <p class="section-kicker">02 / IDENTITIES</p>
+            <h2>角色凭证</h2>
+          </div>
+          <span id="credentialCount" class="counter">0 / 9</span>
+        </div>
+        <p class="microcopy">凭证仅保存在当前浏览器会话；源码不内置任何通行令牌。</p>
+        <details>
+          <summary>配置评委本地凭证</summary>
+          <div id="credentialFields" class="credential-fields"></div>
+        </details>
+      </section>
+
+      <section class="rail-section actions">
+        <button id="createButton" class="button primary">创建隔离案件</button>
+        <button id="advanceButton" class="button secondary" disabled>推进至下一门禁</button>
+        <button id="refreshButton" class="button ghost" disabled>刷新审计状态</button>
+        <p class="microcopy">“推进”会逐步调用相互隔离的角色 API；它不会绕过审批，也不会把 Action Passport 暴露给 Worker。</p>
+      </section>
+    </aside>
+
+    <div class="content">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">PROOF-CARRYING AGENT OPERATIONS</p>
+          <h1>每个副作用，先有许可证，再有证明。</h1>
+          <p class="lede">可由 AgentTeams Worker 调用的角色隔离任务、执行时 Action Passport、崩溃可恢复的逻辑操作，以及外部信任锚下的语义验真。</p>
+        </div>
+        <div class="trust-card">
+          <span>运行原则</span>
+          <strong>Fail Closed</strong>
+          <small>Exact scope · CAS · Ed25519 · Saga</small>
+        </div>
+      </section>
+
+      <section class="overview panel">
+        <div class="overview-main">
+          <div class="status-heading">
+            <div>
+              <span class="label">WORKFLOW STATUS</span>
+              <div class="status-line">
+                <strong id="workflowStatus" class="status idle">NOT STARTED</strong>
+                <span id="riskBadge" class="risk-badge neutral">—</span>
+              </div>
+            </div>
+            <button id="copyIdButton" class="copy-button" disabled title="复制 Workflow ID">复制 ID</button>
+          </div>
+          <p id="finalMessage" class="final-message">选择案件并配置角色凭证后，创建一条全新的可审计工作流。</p>
+          <div class="identity-strip">
+            <div><span class="label">WORKFLOW</span><code id="workflowId">—</code></div>
+            <div><span class="label">PROJECT</span><code id="projectId">—</code></div>
+            <div><span class="label">REVISION</span><strong id="revision">0</strong></div>
+            <div><span class="label">NEXT TASK</span><strong id="nextStep">create_case</strong></div>
+          </div>
+        </div>
+        <div class="metric-grid">
+          <article><span>授权金额</span><strong id="amount">—</strong><small id="currency">未冻结</small></article>
+          <article><span>风险评分</span><strong id="riskScore">—</strong><small>策略快照</small></article>
+          <article><span>签名任务回执</span><strong id="taskReceipts">0</strong><small>角色状态转换</small></article>
+          <article><span>网关执行回执</span><strong id="gatewayReceipts">0</strong><small>真实工具调用</small></article>
+          <article><span>独立主体</span><strong id="agentCount">0</strong><small>签名 actor</small></article>
+          <article><span>证据链</span><strong id="ledgerState">—</strong><small id="ledgerHead">尚未生成</small></article>
+        </div>
+      </section>
+
+      <section class="panel journey-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="section-kicker">RECOVERABLE ROLE DAG</p>
+            <h2>七角色执行链</h2>
+          </div>
+          <span class="legend"><i></i>每一步均绑定 revision 与 task receipt</span>
+        </div>
+        <ol id="journey" class="journey"></ol>
+      </section>
+
+      <section id="approvalPanel" class="approval-panel hidden" aria-live="polite">
+        <div class="approval-icon">!</div>
+        <div>
+          <p class="section-kicker">HUMAN-IN-THE-LOOP GATE</p>
+          <h2>冻结计划需要外部签名的 Human 审批断言</h2>
+          <p>断言绑定身份、revision、策略、计划和具体动作；Workflow、Gateway 与包外 Verifier 分别验签。</p>
+          <div class="digest-row"><span>Plan digest</span><code id="planDigest">—</code></div>
+          <div class="digest-row"><span>Scope</span><code id="approvalScope">—</code></div>
+        </div>
+        <div class="approval-actions">
+          <label for="approvalReason">审批理由</label>
+          <textarea id="approvalReason" rows="3">已复核冻结证据、退款金额、动作范围与补偿条件，同意按当前计划执行。</textarea>
+          <label for="approvalAssertion">外部审批服务 JWS assertion</label>
+          <textarea id="approvalAssertion" rows="3" placeholder="由企业 IdP / 独立审批服务签发；控制面不持有私钥"></textarea>
+          <button id="approveButton" class="button danger">记录限定审批</button>
+        </div>
+      </section>
+
+      <section class="evidence-grid">
+        <article class="panel evidence-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">IMMUTABLE AUDIT TRAIL</p>
+              <h2>事件与角色轨迹</h2>
+            </div>
+            <span id="eventCount" class="counter">0 events</span>
+          </div>
+          <div id="eventStream" class="event-stream empty-state">尚无事件。案件创建后，每次状态转换都会写入哈希链。</div>
+        </article>
+
+        <article class="panel verifier-panel">
+          <div class="panel-heading">
+            <div>
+              <p class="section-kicker">EXTERNAL VERIFICATION</p>
+              <h2>独立 Proof Verifier</h2>
+            </div>
+            <button id="verifyButton" class="button compact" disabled>独立语义验真</button>
+          </div>
+          <div id="verifierEmpty" class="verifier-empty">
+            <div class="shield">✓</div>
+            <p>终态封存后，独立 Auditor 身份调用 Verifier，使用外置公钥和钉住策略复算五类签名、链、审批、工具参数与商务快照 attestation。</p>
+          </div>
+          <div id="verifierResult" class="verifier-result hidden"></div>
+          <div class="control-list">
+            <span>Auditor 独立身份</span><span>外部信任锚</span><span>策略内容钉住</span><span>商务快照签名</span>
+          </div>
+        </article>
+      </section>
+
+      <section class="boundary-note">
+        <strong>证据边界：</strong>本控制台连接的是隔离 SQLite 事务业务靶场；它会真实改变退款余额、工单和补偿状态，但不连接企业生产账户。AgentTeams 模型驱动协同须另行提供可用模型凭证。
+      </section>
+    </div>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

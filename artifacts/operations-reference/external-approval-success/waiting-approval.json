@@ -1,0 +1,82 @@
+{
+  "summary": {
+    "workflow_id": "ops-da7ba287504d462c9f276ced8babe8b7",
+    "project_id": "ops-da7ba287504d462c9f276ced8babe8b7",
+    "domain": "production-operations-change",
+    "change_id": "CHG-HIGH-001",
+    "tenant_id": "acme-cn",
+    "requester": "reference-ops-requester",
+    "status": "WAITING_APPROVAL",
+    "revision": 1,
+    "created_at": "2026-08-13T13:47:14.297592Z",
+    "updated_at": "2026-08-13T13:47:14.310143Z",
+    "context_digest": "6c22ce6465d0aaef5b75cb49dce5724bc23f549fc9b4642ba19cead6b13ac6bf",
+    "policy_digest": "631126426a3224987e4c1f984f56eea894677cf53bcb5ee7beef40c42972e0dc",
+    "plan_digest": "0efbce326e7207c72b5b66b6ebeaeef3f140762718a1840f74b3c4f28af254d7",
+    "approval_required": true,
+    "approval_scope": [
+      "ops.apply_config"
+    ],
+    "approval_digest": null,
+    "risk_units": 80,
+    "final_message": "高风险生产变更已冻结，等待职责分离审批。",
+    "proof_bundle": null,
+    "gateway_receipt_count": 2
+  },
+  "challenge": {
+    "workflow_id": "ops-da7ba287504d462c9f276ced8babe8b7",
+    "project_id": "ops-da7ba287504d462c9f276ced8babe8b7",
+    "tenant_id": "acme-cn",
+    "requester": "reference-ops-requester",
+    "expected_revision": 1,
+    "context_digest": "6c22ce6465d0aaef5b75cb49dce5724bc23f549fc9b4642ba19cead6b13ac6bf",
+    "policy_digest": "631126426a3224987e4c1f984f56eea894677cf53bcb5ee7beef40c42972e0dc",
+    "plan_digest": "0efbce326e7207c72b5b66b6ebeaeef3f140762718a1840f74b3c4f28af254d7",
+    "scope": [
+      "ops.apply_config"
+    ],
+    "actions": [
+      {
+        "tool": "ops.apply_config",
+        "resource": "svc-checkout",
+        "args_digest": "a560724ab73806f1e145bd1650b16c9f81e4ffe6a25a9f1c7555408455f2f1cc",
+        "amount_minor": 80,
+        "currency": "XTS"
+      }
+    ],
+    "amount_minor": 80,
+    "currency": "XTS",
+    "challenge_digest": "e9a1a4d5d903f9fa5050d2db1ead9d0bde3c075a89bcf69634b37a0ecfd6b892"
+  },
+  "business_snapshot": {
+    "workflow_id": "ops-da7ba287504d462c9f276ced8babe8b7",
+    "change": {
+      "change_id": "CHG-HIGH-001",
+      "tenant_id": "acme-cn",
+      "service_id": "svc-checkout",
+      "patch_json": "{\"max_inflight\":160}",
+      "risk_units": 80,
+      "blast_radius": "customer-path",
+      "force_health_failure": 0,
+      "force_unknown_apply": 0,
+      "status": "OPEN",
+      "workflow_id": null
+    },
+    "execution": null,
+    "service": {
+      "service_id": "svc-checkout",
+      "tenant_id": "acme-cn",
+      "environment": "production",
+      "config_json": "{\"checkout_timeout_ms\":1500,\"max_inflight\":80}",
+      "version": 7,
+      "health": "HEALTHY",
+      "config": {
+        "checkout_timeout_ms": 1500,
+        "max_inflight": 80
+      }
+    }
+  },
+  "assertions": {
+    "execution_absent_before_approval": true
+  }
+}

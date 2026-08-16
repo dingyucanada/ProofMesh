@@ -1,0 +1,119 @@
+{
+  "schema_version": "proofmesh.external-claim-register/v1",
+  "policy": "fail-closed: a claim remains PENDING until every declared requirement is represented by a hashed release artifact and an external reviewer is named",
+  "score_target": {
+    "engineering": "approximately 88 internal target; not an official competition score",
+    "external_evidence": "95+ competitiveness target; not a promise or judge result"
+  },
+  "claims": [
+    {
+      "id": "model_driven_agentteams",
+      "status": "PENDING",
+      "allowed_claim": "AgentTeams Team is Active and the direct MCP lifecycle is verified; model-driven collaboration is not yet verified.",
+      "prohibited_claims": [
+        "model-driven AgentTeams collaboration verified",
+        "autonomous multi-agent production run"
+      ],
+      "evidence_requirements": [
+        "provider_nonsecret_metadata",
+        "raw_model_tool_trace_manifest",
+        "four_path_repeat_summary",
+        "workflow_proof_linkage"
+      ],
+      "evidence_files": [],
+      "verified_by": null,
+      "verified_at": null
+    },
+    {
+      "id": "stripe_hubspot_sandbox",
+      "status": "PENDING",
+      "allowed_claim": "Independent-process local HTTP synthetic sandbox is verified; third-party provider sandbox execution is not yet verified.",
+      "prohibited_claims": [
+        "live Stripe and HubSpot integration verified",
+        "third-party payment and CRM production trace"
+      ],
+      "evidence_requirements": [
+        "provider_sandbox_metadata",
+        "redacted_request_id_manifest",
+        "idempotency_and_reconcile_report",
+        "no_live_data_attestation"
+      ],
+      "evidence_files": [],
+      "verified_by": null,
+      "verified_at": null
+    },
+    {
+      "id": "authorized_historical_pilot",
+      "status": "PENDING",
+      "allowed_claim": "Public and synthetic benchmarks are verified; no customer or enterprise historical-data pilot is claimed.",
+      "prohibited_claims": [
+        "customer pilot completed",
+        "enterprise historical tickets validated",
+        "production ROI proven"
+      ],
+      "evidence_requirements": [
+        "data_owner_authorization_record",
+        "anonymization_review_record",
+        "frozen_dataset_schema_and_hash",
+        "blind_evaluation_report"
+      ],
+      "evidence_files": [],
+      "verified_by": null,
+      "verified_at": null
+    },
+    {
+      "id": "independent_reproduction",
+      "status": "PENDING",
+      "allowed_claim": "The source and extracted release are developer-verified; no independent external reproduction is claimed.",
+      "prohibited_claims": [
+        "independently reproduced",
+        "third-party verification completed"
+      ],
+      "evidence_requirements": [
+        "reproducer_identity_and_independence",
+        "frozen_release_hash",
+        "clean_environment_run_report",
+        "signed_reproduction_attestation"
+      ],
+      "evidence_files": [],
+      "verified_by": null,
+      "verified_at": null
+    },
+    {
+      "id": "public_repository_and_identity",
+      "status": "PENDING",
+      "allowed_claim": "A scrubbed local release is reproducible; public repository and competition identity links are not yet supplied.",
+      "prohibited_claims": [
+        "public open-source adoption evidence",
+        "public competition identity verified"
+      ],
+      "evidence_requirements": [
+        "public_repository_record",
+        "immutable_release_record",
+        "competition_identity_record",
+        "public_contact_record"
+      ],
+      "evidence_files": [],
+      "verified_by": null,
+      "verified_at": null
+    },
+    {
+      "id": "production_readiness",
+      "status": "PENDING",
+      "allowed_claim": "Production boundary interfaces and deployment references are implemented; production readiness is not claimed.",
+      "prohibited_claims": [
+        "production ready",
+        "enterprise SLA verified"
+      ],
+      "evidence_requirements": [
+        "enterprise_identity_trace",
+        "managed_key_trace",
+        "production_database_failure_drill",
+        "capacity_security_and_sla_report"
+      ],
+      "evidence_files": [],
+      "verified_by": null,
+      "verified_at": null
+    }
+  ]
+}

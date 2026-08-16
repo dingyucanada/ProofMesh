@@ -1,0 +1,38 @@
+schema_version: proofmesh.skill-contract/v1
+skill:
+  name: collect-refund-context
+  version: 1.0.0
+  role: context-investigator
+  purpose: Gather authoritative, privacy-minimized refund facts with provenance.
+invocation:
+  trigger: The context task is assigned with a valid normalized request artifact.
+  preconditions: [workflow_id, expected_revision and task_id are present, persisted workflow status is NORMALIZED]
+inputs:
+  schema: references/input.schema.json
+  confidentiality: confidential
+  integrity: let ProofMesh enforce tenant binding and revision CAS; accept no business facts from Team Room text
+outputs:
+  schema: references/output.schema.json
+  success_conditions: [status is CONTEXT_READY or explicitly BLOCKED, revision increments once, last_step is gather_context]
+dependencies:
+  teamharness: [taskflow]
+  mcp_tools: [proofmesh.gather_context]
+  contracts: [proofmesh-role-tasks/v1, proofmesh.task-step-receipt/v1, signed-gateway-receipt/v1]
+execution:
+  idempotency_key: workflow_id + expected_revision + task_id; CAS prevents double transition
+  steps: [ack-task, validate-tool-input, call-gather-context, validate-context-ready-or-blocked-summary, submit-task]
+  timeout_seconds: 30
+failure_policy:
+  retry: {max_attempts: 3, backoff: exponential, only: [PM-CONTEXT-003]}
+  terminal_errors: [PM-CONTEXT-001, PM-CONTEXT-002, PM-CONTEXT-004, PM-CONTEXT-005]
+  on_failure: Do not emit a partial context as success; block the task with source receipt digests and an error code.
+security:
+  allowed: [read scoped ticket, read scoped order refund context, redact, hash]
+  denied: [cross-tenant query, mutation, policy decision, approval, storing raw PII in chat, call Leader-only message]
+verification:
+  checks: [input-schema, expected-revision, context-ready-or-blocked-status, revision-increment, gateway-receipt-count, signed-task-receipt-count]
+  evidence: [workflow_id, task_id, revision, context_digest, gateway_receipt_count, task_receipt_count]
+reuse:
+  stateless: true
+  isolation_key: tenant_id + workflow_id
+  compatible_with: [AgentTeams-v1.2.0-beta.1, QwenPaw, ProofMesh-refund-v1]

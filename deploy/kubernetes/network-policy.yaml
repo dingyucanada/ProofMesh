@@ -1,0 +1,83 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: proofmesh-agent-default-deny-egress
+  namespace: proofmesh-agents
+spec:
+  podSelector:
+    matchLabels:
+      proofmesh.io/enforced: "true"
+  policyTypes:
+    - Egress
+  egress: []
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: proofmesh-agent-allow-dns-egress
+  namespace: proofmesh-agents
+spec:
+  podSelector:
+    matchLabels:
+      proofmesh.io/enforced: "true"
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: proofmesh-agent-allow-gateway-egress
+  namespace: proofmesh-agents
+spec:
+  podSelector:
+    matchLabels:
+      proofmesh.io/enforced: "true"
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: proofmesh-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: proofmesh-gateway
+      ports:
+        - protocol: TCP
+          port: 8443
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: proofmesh-protected-tools-gateway-only
+  namespace: proofmesh-tools
+spec:
+  podSelector:
+    matchLabels:
+      proofmesh.io/protected-tool: "true"
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: proofmesh-system
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/name: proofmesh-gateway
+      ports:
+        - protocol: TCP
+          port: 8443

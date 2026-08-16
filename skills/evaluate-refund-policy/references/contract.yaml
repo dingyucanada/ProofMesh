@@ -1,0 +1,38 @@
+schema_version: proofmesh.skill-contract/v1
+skill:
+  name: evaluate-refund-policy
+  version: 1.0.0
+  role: risk-policy-sentinel
+  purpose: Convert trusted context and versioned policy into a frozen, digest-bound refund plan.
+invocation:
+  trigger: The policy task is assigned with a verified context artifact.
+  preconditions: [workflow_id, expected_revision and task_id are present, persisted workflow status is CONTEXT_READY]
+inputs:
+  schema: references/input.schema.json
+  confidentiality: confidential
+  integrity: use the server-persisted context, policy snapshot and revision; never trust message-carried policy material
+outputs:
+  schema: references/output.schema.json
+  success_conditions: [status is WAITING_APPROVAL, AUTHORIZED or BLOCKED, revision increments once, plan and policy digests are exposed when evaluation succeeds]
+dependencies:
+  teamharness: [taskflow]
+  mcp_tools: [proofmesh.evaluate_policy]
+  contracts: [proofmesh-role-tasks/v1, proofmesh.refund-policy/v1, proofmesh.task-step-receipt/v1]
+execution:
+  idempotency_key: workflow_id + expected_revision + task_id; CAS prevents double transition
+  steps: [ack-task, validate-tool-input, call-evaluate-policy, validate-policy-summary, submit-task]
+  timeout_seconds: 30
+failure_policy:
+  retry: {max_attempts: 2, backoff: exponential, only: [PM-POLICY-003]}
+  terminal_errors: [PM-POLICY-001, PM-POLICY-002, PM-POLICY-004, PM-POLICY-005]
+  on_failure: Return DENY or block the task; never fall back to permissive defaults.
+security:
+  allowed: [read versioned policy, score risk, construct non-executing plan]
+  denied: [approve, mutate, change evidence, omit compensation, broaden tool scope, call Leader-only message]
+verification:
+  checks: [input-schema, expected-revision, allowed-policy-status, revision-increment, policy-digest, plan-digest-when-present, signed-task-receipt-count]
+  evidence: [workflow_id, task_id, revision, status, policy_digest, plan_digest, risk_score, task_receipt_count]
+reuse:
+  stateless: true
+  isolation_key: workflow_id
+  compatible_with: [AgentTeams-v1.2.0-beta.1, QwenPaw, ProofMesh-refund-v1]

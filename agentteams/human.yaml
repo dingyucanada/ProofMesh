@@ -1,0 +1,12 @@
+apiVersion: agentteams.io/v1beta1
+kind: Human
+metadata:
+  name: proofmesh-approver
+  labels:
+    proofmesh.io/workload: refund
+spec:
+  displayName: ProofMesh Refund Approver
+  permissionLevel: 2
+  accessibleTeams:
+    - proofmesh-refund-team
+  note: "External human authority for digest-bound high-risk refund approvals. Agents cannot impersonate this identity."

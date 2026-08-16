@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "proofmesh.io/teamharness-direct-evidence/v1",
+  "capturedAt": "2026-08-13T20:50:22+08:00",
+  "testMode": "direct-mcp-control-plane",
+  "executed": true,
+  "teamResourceCreated": true,
+  "team": {
+    "name": "proofmesh-refund-team",
+    "uid": "f93ad59d-f872-49ec-8557-95f6e60848e3",
+    "phase": "Active",
+    "leaderReady": true,
+    "readyWorkers": 6,
+    "totalWorkers": 6
+  },
+  "directMcpHealthProbe": {
+    "verified": true,
+    "workerCount": 7,
+    "expectedResult": {"ok": true, "tool": "health", "role": null}
+  },
+  "correlation": {
+    "projectId": "proofmesh-direct-20260813",
+    "taskId": "proofmesh-direct-20260813-01",
+    "leaderWorker": "case-orchestrator",
+    "assignedWorker": "ticket-intake",
+    "resultSha256": "ba2f6e53df3d020c3dd318e01e734f1fea0bdb0503a2279c5d2de98c3df73451",
+    "taskMetaSha256": "d81e751b78f2dc1212cc6595e4d19388ddaa87e6fde07bbba31a526eceb1716f",
+    "projectMetaSha256": "08a2bb1cfd2709dfb3aff58ecc656dc67e9c0f6d84282b7969976b6fdece31f1",
+    "projectPlanSha256": "1332c06840651e5c61637b785da6a66f5b50a9a545ea3716cd06c587f6febc38"
+  },
+  "lifecycle": [
+    {"step": "create_project", "status": "passed", "actor": "case-orchestrator", "output": {"projectStatus": "active"}},
+    {"step": "plan_dag", "status": "passed", "actor": "case-orchestrator", "output": {"planType": "dag", "readyNodes": 1}},
+    {"step": "delegate_task", "status": "passed", "actor": "case-orchestrator", "output": {"taskStatus": "assigned", "assignedTo": "ticket-intake", "synced": true}},
+    {"step": "ack_task", "status": "passed", "actor": "ticket-intake", "output": {"taskStatus": "in_progress", "pulled": true, "synced": true}},
+    {"step": "submit_task", "status": "passed", "actor": "ticket-intake", "output": {"taskStatus": "submitted", "resultStatus": "SUCCESS", "synced": true, "matrixArtifactPublished": false}},
+    {"step": "check_task", "status": "passed", "actor": "case-orchestrator", "output": {"pulled": true, "effective": true, "validationErrorCount": 0}},
+    {"step": "accept_task", "status": "passed", "actor": "case-orchestrator", "output": {"nodeStatus": "completed", "accepted": true}}
+  ],
+  "artifactPublication": {
+    "verified": false,
+    "status": "failed",
+    "reasonCode": "ATB-007",
+    "boundary": "Optional Matrix artifact publication failed its symlink path check after task state and result synchronization succeeded; it is not counted as lifecycle success evidence."
+  },
+  "modelDrivenCollaboration": {
+    "verified": false,
+    "boundary": "Every lifecycle call was invoked directly against the TeamHarness stdio MCP server in the running Leader or Worker container. The Manager still uses a deliberate placeholder provider and welcomeSent=false; no autonomous model collaboration is claimed."
+  }
+}

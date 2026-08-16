@@ -1,0 +1,38 @@
+schema_version: proofmesh.skill-contract/v1
+skill:
+  name: curate-refund-memory
+  version: 1.0.0
+  role: case-memory-curator
+  purpose: Persist a privacy-minimized, digest-linked record for a verified terminal case.
+invocation:
+  trigger: The memory task is assigned after independent verification succeeds.
+  preconditions: [workflow_id, expected_revision and task_id are present, persisted workflow status is VERIFIED or verified COMPENSATED]
+inputs:
+  schema: references/input.schema.json
+  confidentiality: confidential
+  integrity: accept terminal truth only from outcome-verifier output
+outputs:
+  schema: references/output.schema.json
+  success_conditions: [status is COMPLETED or COMPENSATED, revision increments once, proof_bundle points to the sealed workflow proof]
+dependencies:
+  teamharness: [taskflow]
+  mcp_tools: [proofmesh.curate_memory]
+  contracts: [proofmesh-role-tasks/v1, proofmesh.refund-verification/v1, proofmesh.task-step-receipt/v1]
+execution:
+  idempotency_key: workflow_id + expected_revision + task_id; CAS prevents double transition
+  steps: [ack-task, validate-tool-input, call-curate-memory, validate-sealed-summary, submit-task]
+  timeout_seconds: 30
+failure_policy:
+  retry: {max_attempts: 2, backoff: fixed, only: [PM-MEMORY-004]}
+  terminal_errors: [PM-MEMORY-001, PM-MEMORY-002, PM-MEMORY-003, PM-MEMORY-005]
+  on_failure: Leave the project non-completed and preserve the verified proof bundle for operator recovery.
+security:
+  allowed: [redact, tokenize, append immutable index, store reusable non-PII resolution pattern]
+  denied: [store raw PII, secrets, approval challenge, action passport, unverified result, overwrite conflicting fingerprint, call Leader-only message]
+verification:
+  checks: [input-schema, revision-cas, completed-or-compensated-status, revision-increment, proof-bundle-path, signed-task-receipt-count]
+  evidence: [workflow_id, task_id, revision, status, proof_bundle, task_receipt_count, gateway_receipt_count]
+reuse:
+  stateless: false
+  isolation_key: tenant_id + workflow_id
+  compatible_with: [AgentTeams-v1.2.0-beta.1, QwenPaw, ProofMesh-refund-v1]

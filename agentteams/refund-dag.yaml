@@ -1,0 +1,115 @@
+schemaVersion: proofmesh.io/refund-task-graph/v1
+kind: RefundTaskGraph
+metadata:
+  name: proofmesh-refund-v1
+  compatibility:
+    agentteams: v1.2.0-beta.1
+    teamharness: builtin-v1beta1
+spec:
+  project:
+    idFrom: workflow_id
+    owner: case-orchestrator
+    createWith: projectflow
+    taskManager: taskflow
+    plannedTaskNodes: [normalize, context, policy, execute, verify, memory]
+  nodes:
+    - id: create
+      owner: case-orchestrator
+      skill: orchestrate-refund-case
+      dependsOn: []
+      executionSurface: projectflow
+      actions: [create_project, plan_dag]
+      materializesTask: false
+    - id: normalize
+      owner: ticket-intake
+      skill: normalize-refund-case
+      dependsOn: [create]
+      executionSurface: taskflow
+      materializesTask: true
+      acceptedNodeState: completed
+    - id: context
+      owner: context-investigator
+      skill: collect-refund-context
+      dependsOn: [normalize]
+      executionSurface: taskflow
+      materializesTask: true
+      acceptedNodeState: completed
+    - id: policy
+      owner: risk-policy-sentinel
+      skill: evaluate-refund-policy
+      dependsOn: [context]
+      executionSurface: taskflow
+      materializesTask: true
+      acceptedNodeState: completed
+    - id: execute
+      owner: action-executor
+      skill: execute-refund-saga
+      dependsOn: [policy]
+      executionSurface: taskflow
+      materializesTask: true
+      acceptedNodeState: completed
+    - id: verify
+      owner: outcome-verifier
+      skill: verify-refund-outcome
+      dependsOn: [execute]
+      executionSurface: taskflow
+      materializesTask: true
+      acceptedNodeState: completed
+    - id: memory
+      owner: case-memory-curator
+      skill: curate-refund-memory
+      dependsOn: [verify]
+      executionSurface: taskflow
+      materializesTask: true
+      acceptedNodeState: completed
+  approvalGate:
+    after: policy
+    before: execute
+    when: policy.decision == "REQUIRE_APPROVAL"
+    authority: proofmesh-approver
+    onEnter:
+      businessState: WAITING_APPROVAL
+      projectState: paused
+      executePlanNodeState: planned
+      executeTaskMetaState: absent
+    onValidDigestBoundApproval:
+      businessState: AUTHORIZED
+      projectState: active
+      executePlanNodeState: planned
+      nextActions: [ready_nodes, delegate_task, message]
+    forbidden:
+      - agent-self-approval
+      - approval-in-task-message
+      - approval-without-plan-digest
+  stateMapping:
+    projectTaskLifecycle:
+      - planned
+      - assigned
+      - in_progress
+      - submitted
+      - completed
+      - revision
+      - blocked
+      - cancelled
+    projectLifecycle: [active, paused, completed]
+    taskMetaLifecycle: [assigned, in_progress, submitted, cancelled]
+    taskResultLifecycle: [SUCCESS, SUCCESS_WITH_NOTES, REVISION_NEEDED, BLOCKED, FAILED, PARTIAL]
+    businessToTeamHarness:
+      RECEIVED: {project: active, stage: create, action: create_project}
+      NORMALIZED: {project: active, node: normalize, nodeState: completed, taskMetaState: submitted, resultStatus: SUCCESS}
+      CONTEXT_READY: {project: active, node: context, nodeState: completed, taskMetaState: submitted, resultStatus: SUCCESS}
+      WAITING_APPROVAL: {project: paused, node: execute, nodeState: planned, taskMetaState: absent}
+      AUTHORIZED: {project: active, node: execute, nodeState: planned, taskMetaState: absent}
+      EXECUTED: {project: active, node: execute, nodeState: completed, taskMetaState: submitted, resultStatus: [SUCCESS, SUCCESS_WITH_NOTES]}
+      VERIFIED: {project: active, node: verify, nodeState: completed, taskMetaState: submitted, resultStatus: SUCCESS}
+      COMPLETED: {project: completed, node: memory, nodeState: completed, taskMetaState: submitted, resultStatus: SUCCESS}
+      COMPENSATED: {project: completed, node: memory, nodeState: completed, taskMetaState: submitted, resultStatus: SUCCESS_WITH_NOTES}
+      BLOCKED: {project: paused, node: current, nodeState: blocked, taskMetaState: submitted, resultStatus: BLOCKED}
+  invariants:
+    - Every cross-role handoff carries workflow_id, task_id, trace_id and the predecessor output digest.
+    - Business workflow state and TeamHarness coordination state are persisted separately.
+    - The create stage is a Leader projectflow operation; only the remaining six stages are materialized as taskflow tasks.
+    - A paused approval gate leaves execute planned and undelegated; blocked is reserved for an accepted BLOCKED Worker result.
+    - Only the external Human may release the approval gate.
+    - Execute may consume an approval digest but may never receive an action-passport signing key.
+    - Verify must succeed before Memory may complete and before the project may become completed.

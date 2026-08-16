@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://proofmesh.local/schemas/evaluate-refund-policy.input.json",
+  "title": "ProofMeshEvaluatePolicyToolInput",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["workflow_id", "expected_revision", "task_id"],
+  "properties": {
+    "workflow_id": {"type": "string", "pattern": "^wf-[a-f0-9]{32}$"},
+    "expected_revision": {"type": "integer", "minimum": 0},
+    "task_id": {"type": "string", "minLength": 3, "maxLength": 256}
+  }
+}

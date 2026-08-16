@@ -1,0 +1,13 @@
+{
+  "type": "worker",
+  "version": 1,
+  "worker": {
+    "suggested_name": "outcome-verifier",
+    "model": "qwen3.5-plus",
+    "runtime": "qwenpaw",
+    "apt_packages": [],
+    "pip_packages": [],
+    "npm_packages": []
+  },
+  "source": {"hostname": "proofmesh-build", "os": "portable"}
+}

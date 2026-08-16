@@ -1,0 +1,75 @@
+name: Independent reproduction report
+description: Report a clean-environment reproduction of a frozen ProofMesh release
+title: "[reproduction] "
+labels:
+  - reproduction
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not paste secrets, customer records, private keys, database files, or exploit-ready security details. Verify the release ZIP SHA-256 before running it, and preserve the first failure output before requesting developer help.
+  - type: input
+    id: release
+    attributes:
+      label: Release tag and commit
+      placeholder: v1.0.0-competition / full commit SHA
+    validations:
+      required: true
+  - type: input
+    id: hash
+    attributes:
+      label: Release ZIP SHA-256
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Clean environment
+      description: OS, architecture, Python, Docker, and whether any DB/private key/cache came from the developer machine.
+    validations:
+      required: true
+  - type: dropdown
+    id: contributor
+    attributes:
+      label: Did you contribute code to this release?
+      options:
+        - "No"
+        - "Yes"
+    validations:
+      required: true
+  - type: checkboxes
+    id: runs
+    attributes:
+      label: Completed checks
+      options:
+        - label: Source/extracted full test suite
+        - label: Three package-only reference proofs
+        - label: Tampered-proof negative control
+        - label: AgentDojo locked 629-case replay
+        - label: 240-case independent-process synthetic HTTP shadow
+        - label: AgentTeams static contract validation
+        - label: Secret/private-key/runtime-DB scan
+  - type: textarea
+    id: results
+    attributes:
+      label: Results and differences
+      description: Include aggregate output and links to safe attachments. Do not include credentials or customer data.
+    validations:
+      required: true
+  - type: textarea
+    id: help
+    attributes:
+      label: Developer help received
+      description: List any assistance after preserving the original result; write NONE if there was no help.
+    validations:
+      required: true
+  - type: checkboxes
+    id: declaration
+    attributes:
+      label: Declaration
+      options:
+        - label: I ran this on a machine/environment not controlled by the ProofMesh developers.
+          required: true
+        - label: I have removed all secrets, personal information, private data, and exploit-ready details.
+          required: true
+

@@ -1,0 +1,24 @@
+{
+  "valid": true,
+  "workflow_id": "wf-1bd1d199f9fd4e4a8721abf862eba85d",
+  "terminal_status": "COMPLETED",
+  "checks": {
+    "schema": true,
+    "external_trust_bundle": true,
+    "bundle_signature": true,
+    "embedded_policy_digest": true,
+    "pinned_policy": true,
+    "summary_policy_binding": true,
+    "plan_binding": true,
+    "approval_semantics": true,
+    "task_step_receipts": true,
+    "gateway_receipts": true,
+    "tool_execution_semantics": true,
+    "event_chain": true,
+    "business_snapshot_attestation": true,
+    "terminal_business_state": true,
+    "memory_audit_status": true
+  },
+  "errors": [],
+  "approval_origin_assurance": "AUTOMATIC_POLICY"
+}

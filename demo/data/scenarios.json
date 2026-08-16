@@ -1,0 +1,169 @@
+{
+  "schema_version": "proofmesh.public-evidence-replay/v1",
+  "repository": "https://github.com/dingyucanada/proofmesh-agentteams",
+  "generated_from": "frozen reference artifacts; no live backend",
+  "scenarios": [
+    {
+      "id": "automatic",
+      "tab": "低风险自动路径",
+      "case_id": "TKT-LOW-001",
+      "title": "退款完成，工单正常关闭",
+      "summary": "金额在自动策略阈值内。Gateway 核对通行证后执行退款和关单，Verifier 再读取业务终态。",
+      "terminal": "COMPLETED",
+      "proof": "evidence/reference/automatic/workflow-proof.json",
+      "verification": "evidence/reference/automatic/external-verification.json",
+      "proof_sha256": "a987ca1b408d3b300fe68c40ecb56d3869d284dff1a386d563bc1d31f1f3fc4b",
+      "facts": {
+        "金额": "¥80.00",
+        "审批": "自动策略",
+        "Gateway 回执": "6",
+        "包外验真": "15 / 15"
+      },
+      "steps": [
+        {
+          "name": "读取工单与订单",
+          "detail": "上下文角色只读取必要事实，生成 context digest。",
+          "evidence": {"actor": "context-investigator", "side_effect": false, "context_bound": true}
+        },
+        {
+          "name": "冻结计划与策略",
+          "detail": "风险角色确认低风险自动路径，金额、工具和参数进入 plan digest。",
+          "evidence": {"actor": "risk-policy-sentinel", "approval_required": false, "approval_digest": "AUTOMATIC"}
+        },
+        {
+          "name": "Gateway 执行退款",
+          "detail": "Action Passport 与租户、工具、参数、金额、时效逐项匹配后才放行。",
+          "evidence": {"tool": "payments.issue_refund", "amount_minor": 8000, "currency": "CNY", "status": "ISSUED"}
+        },
+        {
+          "name": "关闭 CRM 工单",
+          "detail": "第二个写操作使用独立凭证和幂等键。",
+          "evidence": {"tool": "crm.close_ticket", "ticket_status": "CLOSED", "duplicate_effects": 0}
+        },
+        {
+          "name": "包外 Verifier 验真",
+          "detail": "Verifier 从 Proof 包外加载信任根和钉住策略，15 项语义检查全部通过。",
+          "evidence": {"terminal": "COMPLETED", "external_verification": "VALID", "checks_passed": 15}
+        }
+      ]
+    },
+    {
+      "id": "human",
+      "tab": "高风险人工路径",
+      "case_id": "TKT-HIGH-001",
+      "title": "没有外部签名审批，就不能执行",
+      "summary": "高风险退款先停在 WAITING_APPROVAL。独立审批服务签发短时 JWS 后，Workflow、Gateway 和 Verifier 都要核对同一份授权。",
+      "terminal": "COMPLETED",
+      "proof": "evidence/reference/human-approval/workflow-proof.json",
+      "verification": "evidence/reference/human-approval/external-verification.json",
+      "proof_sha256": "de262ede0d8ae7a9241393121d83190fe1c5854c7cf2c4a4f0f9ced609bf7561",
+      "facts": {
+        "金额": "¥129.00",
+        "审批来源": "外部签名 JWS",
+        "Gateway 回执": "5",
+        "包外验真": "15 / 15"
+      },
+      "steps": [
+        {
+          "name": "识别高风险动作",
+          "detail": "策略命中人工审批门槛，系统只保存冻结计划，不产生写副作用。",
+          "evidence": {"state": "WAITING_APPROVAL", "write_side_effects_before_approval": 0}
+        },
+        {
+          "name": "生成审批挑战",
+          "detail": "挑战绑定租户、工作流、计划、策略、上下文、金额和有效期。",
+          "evidence": {"challenge_bound_fields": 7, "control_plane_holds_approval_private_key": false}
+        },
+        {
+          "name": "核对外部签名断言",
+          "detail": "审批主体与 API 身份交叉一致；跨工作流重放或字段变化都会失败。",
+          "evidence": {"origin_assurance": "EXTERNAL_SIGNED_ASSERTION", "subject_separation": true}
+        },
+        {
+          "name": "Gateway 执行冻结动作",
+          "detail": "Gateway 自己再验审批 JWS，而不是只相信控制面给出的 approval digest。",
+          "evidence": {"tool": "payments.issue_refund", "amount_minor": 12900, "approval_verified_at_gateway": true}
+        },
+        {
+          "name": "包外 Verifier 验真",
+          "detail": "最终 Proof 同时绑定审批断言摘要、执行回执和新鲜业务终态。",
+          "evidence": {"terminal": "COMPLETED", "external_verification": "VALID", "checks_passed": 15}
+        }
+      ]
+    },
+    {
+      "id": "compensation",
+      "tab": "下游失败补偿",
+      "case_id": "TKT-SAGA-001",
+      "title": "支付已退款，CRM 却没有关单",
+      "summary": "系统不会把 CRM 报错当成“整笔退款没做”。它确认支付终态后执行补偿，恢复可退款余额，并保留原工单。",
+      "terminal": "COMPENSATED",
+      "proof": "evidence/reference/compensation/workflow-proof.json",
+      "verification": "evidence/reference/compensation/external-verification.json",
+      "proof_sha256": "f335674b87003af13851ce0c4423afdd184ad48aad9f4804116a664ae395d0b3",
+      "facts": {
+        "金额": "¥90.00",
+        "CRM": "依赖故障",
+        "可退款余额": "已恢复",
+        "包外验真": "15 / 15"
+      },
+      "steps": [
+        {
+          "name": "Gateway 发起退款",
+          "detail": "支付侧确认退款已经发生，并返回签名回执。",
+          "evidence": {"tool": "payments.issue_refund", "amount_minor": 9000, "payment_status": "ISSUED"}
+        },
+        {
+          "name": "CRM 关单失败",
+          "detail": "下游返回 crm_dependency_unavailable；失败不等于支付未执行。",
+          "evidence": {"tool": "crm.close_ticket", "result": "crm_dependency_unavailable", "ticket_status": "OPEN"}
+        },
+        {
+          "name": "先对账，不盲目重试",
+          "detail": "系统按稳定 operation id 查询支付侧，确认原退款确实成功。",
+          "evidence": {"reconcile_before_retry": true, "original_refund_found": true, "duplicate_refunds": 0}
+        },
+        {
+          "name": "执行精确补偿",
+          "detail": "补偿退款并恢复订单可退款余额，工单保持 OPEN。",
+          "evidence": {"refund_status": "COMPENSATED", "refundable_minor": 29900, "ticket_status": "OPEN"}
+        },
+        {
+          "name": "包外 Verifier 验真",
+          "detail": "Verifier 核对补偿回执、余额恢复和工单终态，结果为 VALID。",
+          "evidence": {"terminal": "COMPENSATED", "external_verification": "VALID", "checks_passed": 15}
+        }
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "question": "错工具、错参数会被放过吗？",
+      "value": "0",
+      "unit": "次错误通过",
+      "detail": "AgentDojo 629 cases；2,159 次合法调用全部接受。",
+      "link": "evidence/public-benchmark/authorization-contract-replay.json"
+    },
+    {
+      "question": "超时恢复会不会重复退款？",
+      "value": "0 / 240",
+      "unit": "重复副作用",
+      "detail": "独立进程 HTTP 合成故障；可判定样本恢复 180/180。",
+      "link": "evidence/synthetic-http-shadow/report.json"
+    },
+    {
+      "question": "结果查不清时怎么办？",
+      "value": "60 / 60",
+      "unit": "停在 UNKNOWN",
+      "detail": "全部进入人工处理，没有自动重派。",
+      "link": "evidence/synthetic-http-shadow/report.json"
+    },
+    {
+      "question": "公开客服文本能直接上生产吗？",
+      "value": "不能",
+      "unit": "Banking77 81.79%",
+      "detail": "只作英语意图 baseline，结论明确 NOT_PRODUCTION_READY。",
+      "link": "https://github.com/dingyucanada/proofmesh-agentteams/tree/main/artifacts/public-domain-evaluation"
+    }
+  ]
+}

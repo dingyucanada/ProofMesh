@@ -1,0 +1,44 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: proofmesh-agent-workload-policy
+  labels:
+    app.kubernetes.io/name: proofmesh-admission
+    app.kubernetes.io/component: policy-enforcement
+webhooks:
+  - name: agent-workloads.proofmesh.io
+    admissionReviewVersions:
+      - v1
+    matchPolicy: Equivalent
+    failurePolicy: Fail
+    sideEffects: None
+    reinvocationPolicy: Never
+    timeoutSeconds: 5
+    clientConfig:
+      service:
+        namespace: proofmesh-system
+        name: proofmesh-admission
+        path: /admission/validate
+        port: 443
+      # Fail-closed placeholder. Replace with the base64 PEM CA that signs the
+      # proofmesh-admission Service certificate before enabling a namespace.
+      caBundle: Cg==
+    namespaceSelector:
+      matchLabels:
+        proofmesh.io/agent-policy: enforced
+    rules:
+      - operations: ["CREATE", "UPDATE"]
+        apiGroups: [""]
+        apiVersions: ["v1"]
+        resources: ["pods", "pods/ephemeralcontainers"]
+        scope: Namespaced
+      - operations: ["CREATE", "UPDATE"]
+        apiGroups: ["apps"]
+        apiVersions: ["v1"]
+        resources: ["deployments", "statefulsets", "daemonsets", "replicasets"]
+        scope: Namespaced
+      - operations: ["CREATE", "UPDATE"]
+        apiGroups: ["batch"]
+        apiVersions: ["v1"]
+        resources: ["jobs", "cronjobs"]
+        scope: Namespaced

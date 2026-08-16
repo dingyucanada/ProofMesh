@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "proofmesh.io/agentteams-compatibility-findings/v1",
+  "capturedAt": "2026-08-13T20:50:22+08:00",
+  "agentTeams": {
+    "release": "v1.2.0-beta.1",
+    "commit": "78d0ceda336befa6e62bf89fc1a6b08b965e128d"
+  },
+  "findings": [
+    {
+      "id": "ATB-001",
+      "status": "mitigated",
+      "boundary": "The release-tagged QwenPaw Worker image was built from the locked official source before adding the local compatibility layer."
+    },
+    {
+      "id": "ATB-002",
+      "status": "mitigated",
+      "boundary": "The built-in plugin is installed below /opt/hiclaw but the QwenPaw default resolves /opt/agentteams; the compatibility image adds a deterministic symlink."
+    },
+    {
+      "id": "ATB-003",
+      "status": "mitigated",
+      "boundary": "The unbounded agent-client-protocol dependency resolved to an API-incompatible version; the latest tested compatible version is pinned to 0.10.1."
+    },
+    {
+      "id": "ATB-004",
+      "status": "mitigated",
+      "boundary": "The embedded Docker readiness path probes openclaw.json for QwenPaw; bootstrap adds an empty compatibility object only after authoritative runtime.yaml exists."
+    },
+    {
+      "id": "ATB-005",
+      "status": "mitigated",
+      "boundary": "The beta upload target is outside the generated Worker's readable object prefix; bootstrap republishes the same ZIP into that Worker's role-scoped prefix."
+    },
+    {
+      "id": "ATB-006",
+      "status": "mitigated",
+      "boundary": "A commit- and hash-pinned minimal REST patch was applied to a temporary checkout, its three handler tests passed under Go 1.25, and a one-layer embedded image replaced only the controller binary on top of the official release digest. hiclaw apply then created an Active seven-member decoupled Team. This is a local compatibility image, not an upstream release."
+    },
+    {
+      "id": "ATB-007",
+      "status": "open",
+      "boundary": "submit_task persisted and synchronized task state and the result file successfully, but optional automatic Matrix artifact publication rejected the workspace shared symlink path. The direct lifecycle still completed through Leader check and acceptance; Matrix file-panel publication remains unverified."
+    }
+  ]
+}

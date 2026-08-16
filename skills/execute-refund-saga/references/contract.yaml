@@ -1,0 +1,42 @@
+schema_version: proofmesh.skill-contract/v1
+skill:
+  name: execute-refund-saga
+  version: 1.0.0
+  role: action-executor
+  purpose: Execute the exact authorized refund saga and compensate partial failure.
+invocation:
+  trigger: The execute task is assigned, unblocked and backed by a frozen plan.
+  preconditions:
+    - workflow_id, expected_revision and task_id are present
+    - persisted workflow status is AUTHORIZED
+    - ProofMesh has a frozen plan and AUTOMATIC or digest-bound external approval
+inputs:
+  schema: references/input.schema.json
+  confidentiality: secret
+  integrity: gateway independently verifies every action passport and digest binding
+outputs:
+  schema: references/output.schema.json
+  success_conditions: [status is EXECUTED or explicitly BLOCKED, revision increments once, gateway and task receipt counts are nonzero]
+dependencies:
+  teamharness: [taskflow]
+  mcp_tools: [proofmesh.execute_authorized]
+  internal_gateway_tools: [payments.issue_refund, crm.close_ticket, payments.compensate_refund]
+  contracts: [proofmesh-role-tasks/v1, action-passport/v1, signed-gateway-receipt/v1, proofmesh.task-step-receipt/v1]
+execution:
+  idempotency_key: workflow_id + expected_revision + task_id; ProofMesh derives stable internal action keys and CAS prevents double transition
+  steps: [ack-task, validate-tool-input, call-execute-authorized, validate-executed-or-blocked-summary, submit-task]
+  timeout_seconds: 60
+failure_policy:
+  retry: {max_attempts: 2, backoff: exponential, only_after_readback: true, only: [PM-EXEC-004]}
+  terminal_errors: [PM-EXEC-001, PM-EXEC-002, PM-EXEC-003, PM-EXEC-005, PM-EXEC-006]
+  on_failure: Stop new mutations and let ProofMesh reconcile and attempt only declared compensation; the step returns EXECUTED for a verifiable compensation candidate or BLOCKED otherwise.
+security:
+  allowed: [submit frozen plan to gateway, read execution state, collect signed receipts]
+  denied: [self-approve, mint passport, access signing key, alter arguments, broaden scope, blind retry, report verified success, call Leader-only message]
+verification:
+  checks: [input-schema, revision-cas, executed-or-blocked-status, plan-digest, approval-binding, gateway-receipt-count, signed-task-receipt-count]
+  evidence: [workflow_id, task_id, revision, status, plan_digest, approval_digest, gateway_receipt_count, task_receipt_count]
+reuse:
+  stateless: false
+  isolation_key: workflow_id + idempotency_key
+  compatible_with: [AgentTeams-v1.2.0-beta.1, QwenPaw, ProofMesh-refund-v1]

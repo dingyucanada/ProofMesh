@@ -1,0 +1,33 @@
+{
+  "schema_version": "proofmesh.synthetic-shadow-manifest/v1",
+  "provenance": {
+    "synthetic": true,
+    "customer_data": false,
+    "enterprise_historical_data": false,
+    "third_party_provider": false,
+    "blind_workload": true,
+    "shadow_write_mode": "isolated-local-http-sandbox"
+  },
+  "files": [
+    {
+      "path": "workload.json",
+      "bytes": 99219,
+      "sha256": "6abfb6d2ce8ea0326b8f0d8005a7b72b08813672f10b8e9047f851219ff5b676"
+    },
+    {
+      "path": "case-results.jsonl",
+      "bytes": 69921,
+      "sha256": "91e06a59d1f97ff6f7f1900406f53907c91570b9fa688d52a5d3d4dbf50e17d4"
+    },
+    {
+      "path": "report.json",
+      "bytes": 4715,
+      "sha256": "54d4e1ac5497d71d11d7a57e3503e878d43063720bc6999c17700aa991fde048"
+    },
+    {
+      "path": "report.md",
+      "bytes": 2550,
+      "sha256": "52706819c44709e6a740475e79f7572481f2a33dfec8aadce3cda6ba1df950aa"
+    }
+  ]
+}

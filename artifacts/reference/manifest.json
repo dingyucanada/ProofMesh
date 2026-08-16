@@ -1,0 +1,127 @@
+{
+  "schema_version": "proofmesh.reference-evidence-manifest/v1",
+  "generated_at": "2026-08-13T12:31:57.010503+00:00",
+  "scope": "isolated deterministic commerce sandbox; not a model-quality or production-availability benchmark",
+  "approval_origin": "reference script signed a synthetic assertion with a private key outside the ProofMesh runtime; not enterprise IdP authentication or MFA evidence",
+  "approval_assertion_replay_semantics": "one JTI covers two exact bound actions and idempotent retries; workflow, revision, plan, policy, context, subject and action contracts prevent cross-case reuse",
+  "cases": [
+    {
+      "slug": "automatic",
+      "ticket_id": "TKT-LOW-001",
+      "workflow_id": "wf-1bd1d199f9fd4e4a8721abf862eba85d",
+      "terminal_status": "COMPLETED",
+      "revision": 6,
+      "agent_count": 7,
+      "task_receipt_count": 7,
+      "gateway_receipt_count": 6,
+      "approval_required": false,
+      "approval_digest": "AUTOMATIC",
+      "external_verification_valid": true,
+      "proof": "automatic/workflow-proof.json",
+      "verification_report": "automatic/external-verification.json",
+      "waiting_evidence": null,
+      "business_outcome": {
+        "refund_status": "ISSUED",
+        "ticket_status": "CLOSED",
+        "refundable_minor": 21900
+      }
+    },
+    {
+      "slug": "human-approval",
+      "ticket_id": "TKT-HIGH-001",
+      "workflow_id": "wf-a4c3cb902a8b4477baf5817c2ee10eb7",
+      "terminal_status": "COMPLETED",
+      "revision": 7,
+      "agent_count": 8,
+      "task_receipt_count": 8,
+      "gateway_receipt_count": 5,
+      "approval_required": true,
+      "approval_digest": "85c1e737fceeee1e48647ab247007299105071d045911d5490961637365d9a76",
+      "external_verification_valid": true,
+      "proof": "human-approval/workflow-proof.json",
+      "verification_report": "human-approval/external-verification.json",
+      "waiting_evidence": "human-approval/waiting-approval.json",
+      "business_outcome": {
+        "refund_status": "ISSUED",
+        "ticket_status": "CLOSED",
+        "refundable_minor": 17000
+      }
+    },
+    {
+      "slug": "compensation",
+      "ticket_id": "TKT-SAGA-001",
+      "workflow_id": "wf-4c91c41651884bd691e8f7768c084244",
+      "terminal_status": "COMPENSATED",
+      "revision": 6,
+      "agent_count": 7,
+      "task_receipt_count": 7,
+      "gateway_receipt_count": 7,
+      "approval_required": false,
+      "approval_digest": "AUTOMATIC",
+      "external_verification_valid": true,
+      "proof": "compensation/workflow-proof.json",
+      "verification_report": "compensation/external-verification.json",
+      "waiting_evidence": null,
+      "business_outcome": {
+        "refund_status": "COMPENSATED",
+        "ticket_status": "OPEN",
+        "refundable_minor": 29900
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 950,
+      "sha256": "35992911d48ee5b4aa12838a2d23a6fa7185a218e3a9b200eb42004dfdd7f44e"
+    },
+    {
+      "path": "automatic/external-verification.json",
+      "bytes": 675,
+      "sha256": "ee780f7da2b8ffe6a2c8fc52573783d4d185100e531c089d54735115144486e8"
+    },
+    {
+      "path": "automatic/workflow-proof.json",
+      "bytes": 120872,
+      "sha256": "a987ca1b408d3b300fe68c40ecb56d3869d284dff1a386d563bc1d31f1f3fc4b"
+    },
+    {
+      "path": "compensation/external-verification.json",
+      "bytes": 677,
+      "sha256": "3c86f64eaabba679fec10dbe58a3e854a321f67bf583f545887ec86d6027127e"
+    },
+    {
+      "path": "compensation/workflow-proof.json",
+      "bytes": 127829,
+      "sha256": "f335674b87003af13851ce0c4423afdd184ad48aad9f4804116a664ae395d0b3"
+    },
+    {
+      "path": "human-approval/external-verification.json",
+      "bytes": 684,
+      "sha256": "ce913713e3df70360ec24a01a5f71e5788edb3cb407700509b7443b472b9f315"
+    },
+    {
+      "path": "human-approval/waiting-approval.json",
+      "bytes": 18801,
+      "sha256": "1b8c93b1f2a053642e9ab105b9f793f216bf8152772615ab23064afbd7e5d844"
+    },
+    {
+      "path": "human-approval/workflow-proof.json",
+      "bytes": 131905,
+      "sha256": "de262ede0d8ae7a9241393121d83190fe1c5854c7cf2c4a4f0f9ced609bf7561"
+    },
+    {
+      "path": "pinned-refund-policy.json",
+      "bytes": 1125,
+      "sha256": "eb9013678d59efdffc2d68198b59ea7259313b22e0e4baf61ec6f84fc39b54c6"
+    },
+    {
+      "path": "trust-bundle.json",
+      "bytes": 1842,
+      "sha256": "17ba8e516ea00a7f882d49f57c4179363f29df8ec3b5c6874c32f6df3b9acc34"
+    }
+  ],
+  "private_keys_included": false,
+  "databases_included": false,
+  "tokens_included": false
+}

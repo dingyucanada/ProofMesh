@@ -1,0 +1,40 @@
+services:
+  proofmesh:
+    build:
+      context: .
+      args:
+        PROOFMESH_INSTALL_PROFILE: production
+    environment:
+      PROOFMESH_ENV: production
+      PROOFMESH_AUTH_MODE: oidc
+      PROOFMESH_OIDC_ISSUER: ${PROOFMESH_OIDC_ISSUER:?set HTTPS OIDC issuer}
+      PROOFMESH_OIDC_AUDIENCE: ${PROOFMESH_OIDC_AUDIENCE:?set OIDC audience}
+      PROOFMESH_OIDC_JWKS_URI: ${PROOFMESH_OIDC_JWKS_URI:?set HTTPS or file JWKS URI}
+      PROOFMESH_GATEWAY_STORE: postgres
+      PROOFMESH_DATABASE_URL: ${PROOFMESH_DATABASE_URL:?set PostgreSQL DSN}
+      PROOFMESH_SIGNER_MODE: remote
+      PROOFMESH_SIGNER_BASE_URL: ${PROOFMESH_SIGNER_BASE_URL:?set HTTPS signing proxy URL}
+      PROOFMESH_SIGNER_CA_BUNDLE: /run/proofmesh-signer/ca.pem
+      PROOFMESH_SIGNER_CLIENT_CERT: /run/proofmesh-signer/client.pem
+      PROOFMESH_SIGNER_CLIENT_KEY: /run/proofmesh-signer/client-key.pem
+      # Override the development compose's required static-token interpolation.
+      # In production these empty values are ignored because AUTH_MODE=oidc.
+      PROOFMESH_ORCHESTRATOR_TOKEN: ""
+      PROOFMESH_APPROVER_TOKEN: ""
+      PROOFMESH_AUDITOR_TOKEN: ""
+      PROOFMESH_INTAKE_TOKEN: ""
+      PROOFMESH_INVESTIGATOR_TOKEN: ""
+      PROOFMESH_POLICY_TOKEN: ""
+      PROOFMESH_EXECUTOR_TOKEN: ""
+      PROOFMESH_VERIFIER_TOKEN: ""
+      PROOFMESH_MEMORY_TOKEN: ""
+      PROOFMESH_GATEWAY_TOKEN: ""
+    volumes:
+      - type: bind
+        source: ${PROOFMESH_SIGNER_MTLS_DIR:?set directory containing ca.pem, client.pem and client-key.pem}
+        target: /run/proofmesh-signer
+        read_only: true
+      - type: bind
+        source: ${PROOFMESH_TRUST_BUNDLE:?set PROOFMESH_TRUST_BUNDLE to the externally approved trust JSON}
+        target: /app/config/trust/action-issuers.json
+        read_only: true

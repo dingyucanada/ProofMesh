@@ -1,0 +1,23 @@
+{
+  "artifacts": {
+    "case-results.jsonl": {
+      "byte_count": 116426,
+      "sha256": "55888dc80a44084c76392acbd0547645a2a7646f945bfa36b8495ac5f2888332"
+    },
+    "provenance.json": {
+      "byte_count": 3344,
+      "sha256": "64333c2c9ae8afbccbddc089ba42d05622de3c9ad7e2530b789eb063367ecb5d"
+    },
+    "report.json": {
+      "byte_count": 2945,
+      "sha256": "12045136d2135811846a443a7756573d866adcaff95379b10775c6d66f8a43c4"
+    },
+    "report.md": {
+      "byte_count": 611,
+      "sha256": "e47d18d044dd1b84b160a901a253e1ac1eb1eb4bfaa50f6e0911b3445ad20467"
+    }
+  },
+  "data_label": "PUBLIC_REAL_OBSERVATIONAL",
+  "schema_version": "proofmesh.cfpb-public-shadow/v1",
+  "status": "PASS"
+}

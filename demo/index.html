@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="ProofMesh 只读证据回放：查看 AgentTeams、Action Passport、崩溃对账与包外验真的冻结运行证据。"
+    />
+    <title>ProofMesh｜只读证据回放</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#demo">跳到回放</a>
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="ProofMesh 首页">
+        <span class="brand-mark" aria-hidden="true">P</span>
+        <span>ProofMesh</span>
+      </a>
+      <nav aria-label="页面导航">
+        <a href="#demo">回放</a>
+        <a href="#evidence">证据</a>
+        <a href="#boundary">边界</a>
+        <a class="repo-link" data-repo-link href="https://github.com/dingyucanada/proofmesh-agentteams">查看代码</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">READ-ONLY EVIDENCE REPLAY · 非实时后端</p>
+          <h1 id="hero-title">退款已经成功，CRM 却失败。<br />Agent 该不该再试一次？</h1>
+          <p class="lede">
+            ProofMesh 不让 Agent 猜。它先核对动作通行证，再向上游对账；结果查不清，就停在人工处理，不盲目重试。
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#demo">播放三条冻结路径</a>
+            <a class="button secondary" data-repo-link href="https://github.com/dingyucanada/proofmesh-agentteams">10 分钟本地复现</a>
+          </div>
+        </div>
+        <aside class="truth-card" aria-label="演示边界">
+          <span class="status-dot" aria-hidden="true"></span>
+          <p class="truth-title">这是什么</p>
+          <p>浏览器中的确定性证据回放。页面读取仓库内冻结的 Proof、验真报告和基准摘要。</p>
+          <p class="truth-title">这不是什么</p>
+          <p>不是在线支付，不连接 CRM，不调用大模型，也不是客户试点。</p>
+        </aside>
+      </section>
+
+      <section class="flow-strip" aria-label="系统流程">
+        <span>AgentTeams 分工</span><b aria-hidden="true">→</b>
+        <span>动作通行证</span><b aria-hidden="true">→</b>
+        <span>Action Gateway</span><b aria-hidden="true">→</b>
+        <span>对账与补偿</span><b aria-hidden="true">→</b>
+        <span>包外验真</span>
+      </section>
+
+      <section class="demo-section" id="demo" aria-labelledby="demo-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">THREE FROZEN PATHS</p>
+            <h2 id="demo-title">同一笔动作，三种不同结局</h2>
+          </div>
+          <p>选一条路径，再逐步播放。每一步都对应仓库内可以复算的证据。</p>
+        </div>
+
+        <div class="scenario-tabs" id="scenario-tabs" role="tablist" aria-label="选择回放场景"></div>
+
+        <div class="replay-grid">
+          <article class="replay-panel" aria-live="polite">
+            <div class="replay-head">
+              <div>
+                <p class="case-id" id="case-id"></p>
+                <h3 id="scenario-title"></h3>
+              </div>
+              <span class="terminal-badge" id="terminal-badge"></span>
+            </div>
+            <p class="scenario-summary" id="scenario-summary"></p>
+
+            <ol class="timeline" id="timeline"></ol>
+
+            <div class="replay-controls">
+              <button class="button secondary" id="reset-button" type="button">重新开始</button>
+              <button class="button primary" id="next-button" type="button">下一步</button>
+            </div>
+          </article>
+
+          <aside class="evidence-panel" aria-labelledby="evidence-panel-title">
+            <div class="evidence-head">
+              <div>
+                <p class="eyebrow">CURRENT EVIDENCE</p>
+                <h3 id="evidence-panel-title">当前证据</h3>
+              </div>
+              <span class="integrity-badge" id="integrity-badge">等待校验</span>
+            </div>
+            <dl class="fact-list" id="fact-list"></dl>
+            <pre id="evidence-json" tabindex="0" aria-label="当前步骤的结构化证据"></pre>
+            <div class="evidence-actions">
+              <a id="proof-link" class="text-link" href="#">查看冻结 Proof</a>
+              <button id="copy-button" class="text-button" type="button">复制这一步</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="evidence-section" id="evidence" aria-labelledby="evidence-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">WHAT HAS ACTUALLY RUN</p>
+            <h2 id="evidence-title">四组实验，各回答一个问题</h2>
+          </div>
+          <p>数字只按各自的实验边界解释，不把公开数据或合成故障写成客户成绩。</p>
+        </div>
+        <div class="metric-grid" id="metric-grid"></div>
+
+        <div class="agentteams-card">
+          <div>
+            <p class="eyebrow">AGENTTEAMS RUNTIME</p>
+            <h3>协同控制面真的跑过，但模型自主协同还没有。</h3>
+            <p>
+              已验证基线为 AgentTeams v1.2.0-beta.1：Team Active、7/7 Worker Running，跨两个真实容器完成 direct MCP 生命周期 7/7。
+            </p>
+          </div>
+          <div class="runtime-facts" aria-label="AgentTeams 运行事实">
+            <span><strong>1 + 6</strong>Leader + Workers</span>
+            <span><strong>7 / 7</strong>direct MCP</span>
+            <span><strong>false</strong>modelDriven</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="boundary-section" id="boundary" aria-labelledby="boundary-title">
+        <div>
+          <p class="eyebrow">HONEST BOUNDARY</p>
+          <h2 id="boundary-title">这个链接证明什么，也说明还缺什么</h2>
+        </div>
+        <div class="boundary-grid">
+          <article>
+            <h3>已经能复核</h3>
+            <ul>
+              <li>冻结 Proof 的哈希和 15 项包外验真结果</li>
+              <li>授权参数错配被 Gateway 拦截</li>
+              <li>超时后先对账，未知状态停止自动重试</li>
+              <li>AgentTeams 控制面与 direct MCP 生命周期</li>
+            </ul>
+          </article>
+          <article>
+            <h3>仍未完成</h3>
+            <ul>
+              <li>模型驱动的七 Agent 自主协同</li>
+              <li>真实 Stripe、HubSpot 或企业系统账户</li>
+              <li>客户授权工单与生产试点</li>
+              <li>企业 IdP、KMS、PostgreSQL 与 SLA 验证</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>ProofMesh · Apache-2.0 · 冻结证据回放</p>
+      <p>本页面不收集输入，不调用后端，不产生业务副作用。</p>
+    </footer>
+    <noscript>此回放需要 JavaScript。所有原始证据仍可在 GitHub 仓库中直接查看。</noscript>
+  </body>
+</html>

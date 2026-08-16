@@ -1,0 +1,289 @@
+{
+  "configuration": {
+    "backend": "deterministic in-process TraceBackend",
+    "fixture_key_warning": "Deterministic benchmark-only keys are not deployment credentials.",
+    "gateway": "proofmesh.gateway.ActionGateway",
+    "latency_method": "wall-clock milliseconds, nearest-rank percentiles",
+    "passport_max_calls": 1,
+    "policy_digest": "b496ceffd26b90d1f7074d1333cc0493abc9c824465418941514525f6a97becd",
+    "receipt_verifier": "fresh ExternalTrustVerifier loaded after execution",
+    "storage": "temporary file-backed SQLite (WAL)",
+    "trust_anchor": "external two-key Ed25519 benchmark trust bundle",
+    "trust_bundle_sha256": "bf10da03c85de0d775d93fab8db76eb731750170a3520ba6b969d9b520418745"
+  },
+  "dataset": {
+    "artifact_byte_count": 1863974,
+    "artifact_path": "cases.jsonl",
+    "artifact_sha256": "20146525d139f83d732bc47e0286b0eccdf67118cdc5eba84f5f079863f5546b",
+    "benchmark": "AgentDojo",
+    "benchmark_version": "v1",
+    "case_count": 629,
+    "injection_ground_truth_call_count": 1105,
+    "placeholder_argument_call_count": 1105,
+    "registered_function_count": 56,
+    "suites": {
+      "banking": {
+        "case_count": 144,
+        "legal_accepted": 297,
+        "legal_attempts": 297,
+        "user_call_count": 297
+      },
+      "slack": {
+        "case_count": 105,
+        "legal_accepted": 490,
+        "legal_attempts": 490,
+        "user_call_count": 490
+      },
+      "travel": {
+        "case_count": 140,
+        "legal_accepted": 868,
+        "legal_attempts": 868,
+        "user_call_count": 868
+      },
+      "workspace": {
+        "case_count": 240,
+        "legal_accepted": 504,
+        "legal_attempts": 504,
+        "user_call_count": 504
+      }
+    },
+    "unique_injection_task_count": 27,
+    "unique_user_task_count": 97,
+    "unresolved_placeholder_count": 794,
+    "user_ground_truth_call_count": 2159
+  },
+  "evaluation_scope": {
+    "disclaimer": "This is an offline authorization-contract regression over official ground-truth tool trajectories. It is not a model ASR or utility evaluation.",
+    "does_not_measure": [
+      "model attack success rate (ASR)",
+      "AgentDojo task utility",
+      "prompt-injection detection quality",
+      "end-to-end autonomous-agent behavior"
+    ],
+    "measures": [
+      "exact capability binding",
+      "gateway rejection controls",
+      "idempotent replay semantics",
+      "trace side-effect cardinality",
+      "externally anchored receipt signature and hash-chain integrity"
+    ],
+    "name": "AgentDojo authorization-contract consistency replay"
+  },
+  "invariants": {
+    "capability_call_count": 2159,
+    "checks": {
+      "all_legal_contracts_accepted": true,
+      "all_negative_controls_blocked_with_expected_reason": true,
+      "all_operations_succeeded_once": true,
+      "capability_usage_exact": true,
+      "denial_audit_count_exact": true,
+      "denial_reasons_exact": true,
+      "no_duplicate_side_effects": true,
+      "receipt_call_ids_unique": true,
+      "receipt_count_exact": true,
+      "side_effect_count_exact": true
+    },
+    "denial_evidence_note": "Current gateway denials are durable SQLite audit rows, not signed execution receipts.",
+    "duplicate_side_effect_count": 0,
+    "expected_denial_count": 9265,
+    "expected_denial_reasons": {
+      "arguments_mismatch": 2159,
+      "context_mismatch": 2159,
+      "passport_exhausted": 2159,
+      "tool_mismatch": 2159,
+      "tool_not_registered": 629
+    },
+    "expected_receipt_count": 2159,
+    "expected_side_effect_count": 2159,
+    "observed_denial_count": 9265,
+    "observed_denial_reasons": {
+      "arguments_mismatch": 2159,
+      "context_mismatch": 2159,
+      "passport_exhausted": 2159,
+      "tool_mismatch": 2159,
+      "tool_not_registered": 629
+    },
+    "observed_receipt_count": 2159,
+    "observed_side_effect_count": 2159,
+    "operation_statuses": {
+      "SUCCEEDED": 2159
+    },
+    "signed_denial_receipts": false
+  },
+  "latency_ms": {
+    "argument_mismatch": {
+      "count": 2159,
+      "p50": 0.433,
+      "p95": 0.896,
+      "p99": 1.827
+    },
+    "cached_replay": {
+      "count": 2159,
+      "p50": 0.394,
+      "p95": 0.794,
+      "p99": 1.336
+    },
+    "context_mismatch": {
+      "count": 2159,
+      "p50": 0.444,
+      "p95": 0.776,
+      "p99": 2.294
+    },
+    "legal_first_dispatch": {
+      "count": 2159,
+      "p50": 1.395,
+      "p95": 4.714,
+      "p99": 11.068
+    },
+    "single_use_new_key_reuse": {
+      "count": 2159,
+      "p50": 0.6,
+      "p95": 1.045,
+      "p99": 2.622
+    },
+    "tool_mismatch": {
+      "count": 2159,
+      "p50": 0.438,
+      "p95": 0.729,
+      "p99": 1.679
+    },
+    "unregistered_call": {
+      "count": 629,
+      "p50": 0.209,
+      "p95": 0.502,
+      "p99": 0.967
+    }
+  },
+  "metrics": {
+    "context_mismatch_pass_rate": {
+      "attempts": 2159,
+      "rate": 0.0,
+      "successes": 0,
+      "wilson_95": {
+        "high": 0.001776,
+        "low": 0.0
+      }
+    },
+    "different_idempotency_key_single_use_rejection_rate": {
+      "attempts": 2159,
+      "rate": 1.0,
+      "successes": 2159,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.998224
+      }
+    },
+    "legal_contract_acceptance_rate": {
+      "attempts": 2159,
+      "rate": 1.0,
+      "successes": 2159,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.998224
+      }
+    },
+    "receipt_chain_verification_rate": {
+      "attempts": 2159,
+      "rate": 1.0,
+      "successes": 2159,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.998224
+      }
+    },
+    "receipt_external_verification_rate": {
+      "attempts": 2159,
+      "rate": 1.0,
+      "successes": 2159,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.998224
+      }
+    },
+    "same_idempotency_key_cached_replay_success_rate": {
+      "attempts": 2159,
+      "rate": 1.0,
+      "successes": 2159,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.998224
+      }
+    },
+    "same_tool_argument_mismatch_pass_rate": {
+      "attempts": 2159,
+      "rate": 0.0,
+      "successes": 0,
+      "wilson_95": {
+        "high": 0.001776,
+        "low": 0.0
+      }
+    },
+    "tool_mismatch_pass_rate": {
+      "attempts": 2159,
+      "rate": 0.0,
+      "successes": 0,
+      "wilson_95": {
+        "high": 0.001776,
+        "low": 0.0
+      }
+    },
+    "unregistered_call_pass_rate": {
+      "attempts": 629,
+      "rate": 0.0,
+      "successes": 0,
+      "wilson_95": {
+        "high": 0.00607,
+        "low": 0.0
+      }
+    }
+  },
+  "negative_control_expected_reason_rates": {
+    "argument_mismatch": {
+      "attempts": 2159,
+      "rate": 1.0,
+      "successes": 2159,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.998224
+      }
+    },
+    "context_mismatch": {
+      "attempts": 2159,
+      "rate": 1.0,
+      "successes": 2159,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.998224
+      }
+    },
+    "single_use_new_key_reuse": {
+      "attempts": 2159,
+      "rate": 1.0,
+      "successes": 2159,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.998224
+      }
+    },
+    "tool_mismatch": {
+      "attempts": 2159,
+      "rate": 1.0,
+      "successes": 2159,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.998224
+      }
+    },
+    "unregistered_call": {
+      "attempts": 629,
+      "rate": 1.0,
+      "successes": 629,
+      "wilson_95": {
+        "high": 1.0,
+        "low": 0.99393
+      }
+    }
+  },
+  "passed": true,
+  "schema_version": "proofmesh.authorization-contract-replay-report/v1"
+}

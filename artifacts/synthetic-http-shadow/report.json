@@ -1,0 +1,162 @@
+{
+  "schema_version": "proofmesh.synthetic-shadow-report/v1",
+  "generated_at": "2026-08-13T12:35:01.687399Z",
+  "workload_sha256": "7ba7a9a8789a416d11e75316bac1e2bd54574d29891b603203fd1949e2bf60e9",
+  "provenance": {
+    "synthetic": true,
+    "customer_data": false,
+    "enterprise_historical_data": false,
+    "third_party_provider": false,
+    "blind_workload": true,
+    "shadow_write_mode": "isolated-local-http-sandbox"
+  },
+  "method": {
+    "services": "two independent local OS processes over HTTP",
+    "payment_and_crm_databases": "separate SQLite files owned by their service processes",
+    "gateway": "proofmesh.gateway.ActionGateway",
+    "scope": "gateway authorization, HTTP dispatch, idempotency, reconciliation, compensation",
+    "passport_approval_mode": "AUTOMATIC synthetic low-value cases only",
+    "pinned_approval_policy_enabled": false,
+    "human_approval_assertion_covered": false,
+    "lease_expiry_injection": {
+      "test_only": true,
+      "production_api": false,
+      "mechanism": "direct isolated GatewayStore lease timestamp update",
+      "purpose": "exercise real reconcile-before-retry without a 15-second wait per injected case"
+    },
+    "blind_protocol": {
+      "case_plan_frozen_before_execution": true,
+      "report_aggregates_only_after_all_cases": true,
+      "enterprise_baseline": null,
+      "customer_roi_claim": false
+    },
+    "not_claimed": [
+      "customer pilot",
+      "enterprise historical data",
+      "third-party payment provider",
+      "production SLA",
+      "financial ROI",
+      "Human approval assertion coverage"
+    ]
+  },
+  "sample": {
+    "cases": 240,
+    "seed": 20260813,
+    "fault_matrix": [
+      {
+        "fault_profile": "normal",
+        "cases": 60,
+        "expected_terminal": [
+          "COMPLETED"
+        ],
+        "injection_point": "none"
+      },
+      {
+        "fault_profile": "crm_close_error",
+        "cases": 60,
+        "expected_terminal": [
+          "COMPENSATED"
+        ],
+        "injection_point": "CRM close before commit"
+      },
+      {
+        "fault_profile": "payment_timeout_after_commit",
+        "cases": 60,
+        "expected_terminal": [
+          "RECOVERED_COMPLETED"
+        ],
+        "injection_point": "payment response after committed refund"
+      },
+      {
+        "fault_profile": "reconcile_unknown_after_commit",
+        "cases": 60,
+        "expected_terminal": [
+          "UNKNOWN_MANUAL"
+        ],
+        "injection_point": "payment reconcile visibility after committed refund"
+      }
+    ]
+  },
+  "kpis": {
+    "duplicate_side_effect_rate": {
+      "numerator": 0,
+      "denominator": 240,
+      "rate": 0.0,
+      "wilson_95": [
+        0.0,
+        0.015754
+      ],
+      "definition": "extra payment or CRM write effects / synthetic cases"
+    },
+    "invalid_call_pass_rate": {
+      "numerator": 0,
+      "denominator": 240,
+      "rate": 0.0,
+      "wilson_95": [
+        0.0,
+        0.015754
+      ],
+      "definition": "argument-drift attempts that reached the synthetic service / drift attempts"
+    },
+    "recoverable_terminal_rate": {
+      "numerator": 180,
+      "denominator": 180,
+      "rate": 1.0,
+      "wilson_95": [
+        0.979105,
+        1.0
+      ],
+      "definition": "completed, reconciliation-recovered, or compensated cases / cases with knowable upstream state"
+    },
+    "unknown_fail_closed_rate": {
+      "numerator": 60,
+      "denominator": 60,
+      "rate": 1.0,
+      "definition": "ambiguous reconcile cases that stopped in manual UNKNOWN / ambiguous reconcile cases"
+    },
+    "gateway_http_latency_ms": {
+      "samples": 360,
+      "p50": 5.073,
+      "p95": 12.214,
+      "p99": 20.198
+    },
+    "audit_readback_seconds": {
+      "samples": 240,
+      "p50": 0.003,
+      "p95": 0.01,
+      "definition": "local programmatic snapshot plus receipt retrieval; not human audit time"
+    }
+  },
+  "service_stats": {
+    "payment": {
+      "compensations": 60,
+      "duplicate_refund_effects": 0,
+      "refunds": 240,
+      "unknown_operations": 60
+    },
+    "crm": {
+      "close_effects": 120,
+      "duplicate_close_effects": 0,
+      "tickets": 240
+    },
+    "provenance": {
+      "synthetic": true,
+      "customer_data": false,
+      "enterprise_historical_data": false,
+      "third_party_provider": false,
+      "transport": "independent-process-http"
+    },
+    "process_evidence": {
+      "payment_pid": 76410,
+      "crm_pid": 76411,
+      "different_os_processes": true
+    }
+  },
+  "terminal_counts": {
+    "COMPLETED": 60,
+    "RECOVERED_COMPLETED": 60,
+    "COMPENSATED": 60,
+    "UNKNOWN_MANUAL": 60
+  },
+  "case_result_digest": "90661b8fa6b986307c3098d6fc7317da7eec8cefd52e713012f6246839bf4c04"
+}

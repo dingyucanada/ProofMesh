@@ -1,0 +1,61 @@
+{
+  "schema_version": "proofmesh.operations-reference-manifest/v1",
+  "case_count": 4,
+  "files": [
+    {
+      "path": "automatic-success/external-verification.json",
+      "bytes": 440,
+      "sha256": "88c2829ed21cc4cf943b40dbab968c4d5491ce780f5a9b879405628fd9928b0d"
+    },
+    {
+      "path": "automatic-success/workflow-proof.json",
+      "bytes": 48334,
+      "sha256": "b41ddb9a060458395feaeff5c29cd4297fc72dc1b1e98cc99b513680c3599425"
+    },
+    {
+      "path": "external-approval-success/external-verification.json",
+      "bytes": 440,
+      "sha256": "744ecbb2a30bd958b9acc095e138ce6883544671147957cd2c5ecda9a3f6a0e4"
+    },
+    {
+      "path": "external-approval-success/waiting-approval.json",
+      "bytes": 2799,
+      "sha256": "90730bf75e680fa05050d148217dee552706cc6fbb8df533d492e6420f555025"
+    },
+    {
+      "path": "external-approval-success/workflow-proof.json",
+      "bytes": 55900,
+      "sha256": "7de8bc9d0b73fa1f2c95063e44e7777ffba8f9916c043a684e584311b378e064"
+    },
+    {
+      "path": "pinned-operations-policy.json",
+      "bytes": 815,
+      "sha256": "e1f2d74afee4f3d6720c8292db93dbdc9863f8aaadd8f2b1c0ae62e743fc3622"
+    },
+    {
+      "path": "report.json",
+      "bytes": 2357,
+      "sha256": "d0331a64accf21a760bb75bcbf0939aa14066b41373b6abd66214bdd43d9ca5f"
+    },
+    {
+      "path": "trust-bundle.json",
+      "bytes": 1843,
+      "sha256": "d6094458854ca0b13bdabcfb667d151126b7c6722e97b309ef935c9a5794c869"
+    },
+    {
+      "path": "unknown-manual/unknown-evidence.json",
+      "bytes": 2162,
+      "sha256": "7970ebd2aa151cff5eca58593d665d59e209c7d3a67d0947c4b8628bbb96d090"
+    },
+    {
+      "path": "verified-compensation/external-verification.json",
+      "bytes": 442,
+      "sha256": "fde710017dc5e22293a8c00da4dc262a9f34c988be299b8d464367c1c200cb04"
+    },
+    {
+      "path": "verified-compensation/workflow-proof.json",
+      "bytes": 54949,
+      "sha256": "e1c462d08a1a359ad35f6c160c8b1b928cb8a2cfe233e626306ce8086b14bfde"
+    }
+  ]
+}

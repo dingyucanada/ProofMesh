@@ -1,0 +1,84 @@
+{
+  "data_label": "PUBLIC_REAL_OBSERVATIONAL",
+  "license": "CC0 (as returned by the official API and OpenAPI metadata)",
+  "persistence_policy": "Remote JSON and narrative text processed in memory only; neither is persisted.",
+  "queries": [
+    {
+      "endpoint": "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/",
+      "parameters": {
+        "date_received_max": "2024-01-01",
+        "date_received_min": "2023-01-01",
+        "field": "complaint_what_happened",
+        "frm": 0,
+        "has_narrative": "true",
+        "no_aggs": "true",
+        "no_highlight": "true",
+        "product": "Credit card or prepaid card",
+        "size": 60,
+        "sort": "created_date_asc"
+      },
+      "product": "Credit card or prepaid card",
+      "product_key": "credit_card_or_prepaid",
+      "selection_rule": "first-N from official API under created_date_asc; no manual curation"
+    },
+    {
+      "endpoint": "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/",
+      "parameters": {
+        "date_received_max": "2024-01-01",
+        "date_received_min": "2023-01-01",
+        "field": "complaint_what_happened",
+        "frm": 0,
+        "has_narrative": "true",
+        "no_aggs": "true",
+        "no_highlight": "true",
+        "product": "Checking or savings account",
+        "size": 60,
+        "sort": "created_date_asc"
+      },
+      "product": "Checking or savings account",
+      "product_key": "checking_or_savings",
+      "selection_rule": "first-N from official API under created_date_asc; no manual curation"
+    },
+    {
+      "endpoint": "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/",
+      "parameters": {
+        "date_received_max": "2024-01-01",
+        "date_received_min": "2023-01-01",
+        "field": "complaint_what_happened",
+        "frm": 0,
+        "has_narrative": "true",
+        "no_aggs": "true",
+        "no_highlight": "true",
+        "product": "Money transfer, virtual currency, or money service",
+        "size": 60,
+        "sort": "created_date_asc"
+      },
+      "product": "Money transfer, virtual currency, or money service",
+      "product_key": "money_transfer_or_virtual_currency",
+      "selection_rule": "first-N from official API under created_date_asc; no manual curation"
+    },
+    {
+      "endpoint": "https://www.consumerfinance.gov/data-research/consumer-complaints/search/api/v1/",
+      "parameters": {
+        "date_received_max": "2024-01-01",
+        "date_received_min": "2023-01-01",
+        "field": "complaint_what_happened",
+        "frm": 0,
+        "has_narrative": "true",
+        "no_aggs": "true",
+        "no_highlight": "true",
+        "product": "Debt collection",
+        "size": 60,
+        "sort": "created_date_asc"
+      },
+      "product": "Debt collection",
+      "product_key": "debt_collection",
+      "selection_rule": "first-N from official API under created_date_asc; no manual curation"
+    }
+  ],
+  "retrieved_at_utc": "2026-08-14T01:02:54+00:00",
+  "schema_version": "proofmesh.cfpb-public-shadow/v1",
+  "source_data_use": "https://www.consumerfinance.gov/complaint/data-use/",
+  "source_documentation": "https://cfpb.github.io/ccdb5-api/documentation/",
+  "source_name": "Consumer Financial Protection Bureau Consumer Complaint Database API"
+}

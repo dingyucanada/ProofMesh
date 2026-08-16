@@ -1,0 +1,44 @@
+schema_version: proofmesh.skill-contract/v1
+skill:
+  name: orchestrate-refund-case
+  version: 1.0.0
+  role: case-orchestrator
+  purpose: Materialize and govern one refund workflow as a seven-node TeamHarness project.
+invocation:
+  trigger: A schema-valid customer-refund request is assigned to the Team Leader.
+  preconditions:
+    - The Worker is the sole team_leader of proofmesh-refund-team.
+    - TeamHarness projectflow, taskflow and message skills are available.
+    - The role-scoped ProofMesh orchestrator MCP endpoint is reachable.
+inputs:
+  schema: references/input.schema.json
+  confidentiality: restricted
+  integrity: require tenant and ticket identifiers from the authenticated ProofMesh request boundary
+outputs:
+  schema: references/output.schema.json
+  success_conditions:
+    - ProofMesh returns status RECEIVED with revision 0.
+    - Project id equals workflow_id and one signed create task receipt is persisted.
+    - The Leader creates one TeamHarness project and plans the six downstream Worker nodes.
+dependencies:
+  teamharness: [projectflow, taskflow, message]
+  mcp_tools: [proofmesh.create_case, proofmesh.get_state]
+  contracts: [agentteams/refund-dag.yaml, proofmesh-role-tasks/v1, proofmesh.task-step-receipt/v1]
+execution:
+  idempotency_key: trusted requester event id at the TeamHarness boundary; create_case itself is not a duplicate-suppression API
+  steps: [validate, call-create-case, verify-received-summary, create-project, plan-six-worker-nodes, delegate-and-message, check-and-accept, monitor-gates]
+  timeout_seconds: 60
+failure_policy:
+  retry: {max_attempts: 2, backoff: exponential, only: [PM-ORCH-003, PM-ORCH-004]}
+  terminal_errors: [PM-ORCH-001, PM-ORCH-002, PM-ORCH-005, PM-ORCH-006]
+  on_failure: Re-read authoritative state, pause coordination without inventing a rollback, and notify the external Human with the error code.
+security:
+  allowed: [create coordination resources, read workflow state, pause or resume TeamHarness project after authoritative state change]
+  denied: [approve refund, execute business mutation, mint action passport, expose PII or credentials, mark unverified project completed]
+verification:
+  checks: [input-schema, received-status, revision-zero, signed-create-receipt-count, fixed-dag, unique-owner, approval-gate, terminal-verification]
+  evidence: [workflow_id, project_id, revision, task_receipt_count, task_ids]
+reuse:
+  stateless: false
+  isolation_key: workflow_id
+  compatible_with: [AgentTeams-v1.2.0-beta.1, QwenPaw, ProofMesh-refund-v1]

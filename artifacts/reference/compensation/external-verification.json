@@ -1,0 +1,24 @@
+{
+  "valid": true,
+  "workflow_id": "wf-4c91c41651884bd691e8f7768c084244",
+  "terminal_status": "COMPENSATED",
+  "checks": {
+    "schema": true,
+    "external_trust_bundle": true,
+    "bundle_signature": true,
+    "embedded_policy_digest": true,
+    "pinned_policy": true,
+    "summary_policy_binding": true,
+    "plan_binding": true,
+    "approval_semantics": true,
+    "task_step_receipts": true,
+    "gateway_receipts": true,
+    "tool_execution_semantics": true,
+    "event_chain": true,
+    "business_snapshot_attestation": true,
+    "terminal_business_state": true,
+    "memory_audit_status": true
+  },
+  "errors": [],
+  "approval_origin_assurance": "AUTOMATIC_POLICY"
+}

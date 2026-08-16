@@ -1,0 +1,17 @@
+{
+  "valid": true,
+  "workflow_id": "ops-cb07555a611347faa214cc151ebd50a0",
+  "terminal_status": "COMPLETED",
+  "checks": {
+    "schema_and_claim_boundary": true,
+    "bundle_signature": true,
+    "pinned_policy": true,
+    "plan_binding": true,
+    "gateway_receipts": true,
+    "tool_execution_semantics": true,
+    "event_chain": true,
+    "business_snapshot_attestation": true,
+    "terminal_business_state": true
+  },
+  "errors": []
+}

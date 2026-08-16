@@ -1,0 +1,7 @@
+# CPython 3.12 / Linux x86-64 production additions. Base runtime packages are
+# installed from requirements.txt; PostgreSQL artifacts are SHA-256 pinned.
+-r requirements.txt
+psycopg==3.2.9 \
+  --hash=sha256:01a8dadccdaac2123c916208c96e06631641c0566b22005493f09663c7a8d3b6
+psycopg-binary==3.2.9 \
+  --hash=sha256:76eddaf7fef1d0994e3d536ad48aa75034663d3a07f6f7e3e601105ae73aeff6

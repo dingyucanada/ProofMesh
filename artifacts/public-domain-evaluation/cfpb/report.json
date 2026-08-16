@@ -1,0 +1,90 @@
+{
+  "claim_boundary": {
+    "accuracy_reported": false,
+    "allowed_claim": "Real public complaint narratives were ingested in memory and conservatively routed in shadow/no-write mode.",
+    "prohibited_claims": [
+      "production accuracy",
+      "representative customer distribution",
+      "end-to-end business outcome",
+      "authorization-policy correctness"
+    ],
+    "reason": "CFPB issue labels are observational complaint metadata, not ProofMesh authorization ground truth."
+  },
+  "data_label": "PUBLIC_REAL_OBSERVATIONAL",
+  "limitations": [
+    "CFPB complaints are not a statistical sample of consumer experience.",
+    "Consumer narratives are not verified by CFPB.",
+    "The run is shadow-only and invokes no production or write-capable tool.",
+    "Later CFPB backfills can change a repeated API query; this artifact records retrieval time and source metadata."
+  ],
+  "metrics": {
+    "confidence_bucket_counts": {
+      "high": 57,
+      "low": 92,
+      "medium": 91
+    },
+    "expected_case_count": 240,
+    "forbidden_identity_field_artifact_count": 0,
+    "ingested_case_count": 240,
+    "product_counts": {
+      "checking_or_savings": 60,
+      "credit_card_or_prepaid": 60,
+      "debt_collection": 60,
+      "money_transfer_or_virtual_currency": 60
+    },
+    "raw_narrative_artifact_count": 0,
+    "route_counts": {
+      "human_review_general": 92,
+      "human_review_sensitive": 148
+    },
+    "routed_case_count": 240,
+    "unsafe_write_count": 0,
+    "write_capable_tool_invocation_count": 0
+  },
+  "retrieved_at_utc": "2026-08-14T01:02:54+00:00",
+  "sample_protocol": {
+    "date_received_max_exclusive": "2024-01-01",
+    "date_received_min_inclusive": "2023-01-01",
+    "manual_curation": false,
+    "per_product": 60,
+    "product_count": 4,
+    "public_narrative_required": true,
+    "sort": "created_date_asc"
+  },
+  "schema_version": "proofmesh.cfpb-public-shadow/v1",
+  "source_meta": [
+    {
+      "has_data_issue": false,
+      "is_data_stale": false,
+      "last_indexed": "2026-08-14T12:00:00-05:00",
+      "last_updated": "2026-08-13T12:00:00-05:00",
+      "license": "CC0",
+      "product_key": "credit_card_or_prepaid"
+    },
+    {
+      "has_data_issue": false,
+      "is_data_stale": false,
+      "last_indexed": "2026-08-14T12:00:00-05:00",
+      "last_updated": "2026-08-13T12:00:00-05:00",
+      "license": "CC0",
+      "product_key": "checking_or_savings"
+    },
+    {
+      "has_data_issue": false,
+      "is_data_stale": false,
+      "last_indexed": "2026-08-14T12:00:00-05:00",
+      "last_updated": "2026-08-13T12:00:00-05:00",
+      "license": "CC0",
+      "product_key": "money_transfer_or_virtual_currency"
+    },
+    {
+      "has_data_issue": false,
+      "is_data_stale": false,
+      "last_indexed": "2026-08-14T12:00:00-05:00",
+      "last_updated": "2026-08-13T12:00:00-05:00",
+      "license": "CC0",
+      "product_key": "debt_collection"
+    }
+  ],
+  "status": "PASS"
+}
