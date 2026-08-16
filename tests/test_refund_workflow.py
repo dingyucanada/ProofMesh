@@ -216,12 +216,13 @@ def test_concurrent_approvers_produce_one_atomic_authorization_and_no_execution(
     )
     barrier = threading.Barrier(2)
     outcomes: list[str] = []
+    errors: list[BaseException] = []
 
     def approve_as(identity: str) -> None:
-        reason = f"{identity} reviewed the frozen policy evidence and exact scope"
-        assertion = issue_approval(action_runtime, waiting, subject=identity, reason=reason)
-        barrier.wait(timeout=3)
         try:
+            reason = f"{identity} reviewed the frozen policy evidence and exact scope"
+            assertion = issue_approval(action_runtime, waiting, subject=identity, reason=reason)
+            barrier.wait(timeout=15)
             control.approve(
                 waiting.workflow_id,
                 expected_revision=waiting.revision,
@@ -232,6 +233,8 @@ def test_concurrent_approvers_produce_one_atomic_authorization_and_no_execution(
             outcomes.append("authorized")
         except WorkflowConflict:
             outcomes.append("conflict")
+        except BaseException as exc:  # surfaced below with the originating thread failure
+            errors.append(exc)
 
     threads = [
         threading.Thread(target=approve_as, args=("approver-b",)),
@@ -240,7 +243,9 @@ def test_concurrent_approvers_produce_one_atomic_authorization_and_no_execution(
     for thread in threads:
         thread.start()
     for thread in threads:
-        thread.join(timeout=5)
+        thread.join(timeout=20)
+    assert not any(thread.is_alive() for thread in threads)
+    assert errors == []
     assert sorted(outcomes) == ["authorized", "conflict"]
     current = control.get(waiting.workflow_id)
     assert current.status == WorkflowStatus.AUTHORIZED

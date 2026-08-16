@@ -43,6 +43,7 @@ def issue_assertion(
         trust_bundle_path=trust_bundle_path,
         key_id=KEY_ID,
         issuer=ISSUER,
+        allow_bootstrap=not (private_key_path.exists() and trust_bundle_path.exists()),
         token_types=[APPROVAL_ASSERTION_TYPE],
     )
     claims = HumanApprovalAssertionClaims(

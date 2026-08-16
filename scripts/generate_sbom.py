@@ -44,6 +44,7 @@ def build_sbom(root: Path) -> dict:
         if path.is_file()
         and not path.is_symlink()
         and not any(part in {".git", ".venv", "__pycache__", ".pytest_cache", ".ruff_cache", "var"} for part in path.relative_to(root).parts)
+        and not any(part.endswith(".egg-info") for part in path.relative_to(root).parts)
         and path.name not in {"sbom.cdx.json", "RELEASE_MANIFEST.json"}
         and path.suffix not in {".pyc", ".pyo", ".db", ".sqlite", ".ed25519"}
         and path.relative_to(root).parts[:2]
