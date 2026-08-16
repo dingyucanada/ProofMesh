@@ -11,7 +11,7 @@ ProofMesh 位于 AgentTeams 与支付、CRM 等写工具之间：
 - **reconcile-before-retry** 先查询上游结果，查不清就停止；
 - **External Verifier** 使用 Proof 包外公钥复核审批、回执与业务终态。
 
-[只读在线演示](https://dingyucanada.github.io/proofmesh-agentteams/) · [10 分钟复现](#10-分钟复现) · [架构说明](docs/architecture.md) · [公网演示边界](docs/public-demo-boundary.md) · [安全边界](SECURITY.md)
+[只读在线演示](https://dingyucanada.github.io/ProofMesh/) · [10 分钟复现](#10-分钟复现) · [架构说明](docs/architecture.md) · [公网演示边界](docs/public-demo-boundary.md) · [安全边界](SECURITY.md)
 
 当前已有 Team=`Active`、7/7 Worker=`Running`、direct MCP 生命周期 7/7 与 162 项测试。边界同样明确：`modelDriven=false`，没有接入真实支付/CRM 账户，也没有客户生产试点。
 

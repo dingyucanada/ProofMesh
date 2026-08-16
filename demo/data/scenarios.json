@@ -1,6 +1,6 @@
 {
   "schema_version": "proofmesh.public-evidence-replay/v1",
-  "repository": "https://github.com/dingyucanada/proofmesh-agentteams",
+  "repository": "https://github.com/dingyucanada/ProofMesh",
   "generated_from": "frozen reference artifacts; no live backend",
   "scenarios": [
     {
@@ -163,7 +163,7 @@
       "value": "不能",
       "unit": "Banking77 81.79%",
       "detail": "只作英语意图 baseline，结论明确 NOT_PRODUCTION_READY。",
-      "link": "https://github.com/dingyucanada/proofmesh-agentteams/tree/main/artifacts/public-domain-evaluation"
+      "link": "https://github.com/dingyucanada/ProofMesh/tree/main/artifacts/public-domain-evaluation"
     }
   ]
 }
